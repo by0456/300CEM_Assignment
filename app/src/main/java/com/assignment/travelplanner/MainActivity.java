@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Place> mExampleList = new ArrayList<>();
+    private ArrayList<Plan> plan = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
 
                 Intent intent = new Intent(view.getContext(), AddPlanActivity.class);
-                intent.putParcelableArrayListExtra("places", mExampleList);
+                intent.putParcelableArrayListExtra("places", plan);
 
                 startActivity(intent);
                 finish();
@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("task list", null);
-        Type type = new TypeToken<ArrayList<Place >>() {}.getType();
-        mExampleList = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Plan >>() {}.getType();
+        plan = gson.fromJson(json, type);
 
-        if(mExampleList == null){
-            mExampleList = new ArrayList<>();
+        if(plan == null){
+            plan = new ArrayList<>();
         }
 
     }

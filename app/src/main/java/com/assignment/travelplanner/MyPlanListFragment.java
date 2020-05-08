@@ -7,16 +7,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,13 +23,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
-public class MyPlanFragment extends Fragment {
+public class MyPlanListFragment extends Fragment {
     private static final String TAG_L = "Testing log ";
     private TextView tw;
     private ListView listView;
 
 
-    private ArrayList<Place> placeList = new ArrayList<>();
+    private ArrayList<Plan> plan = new ArrayList<>();
 
     @Override
     public View onCreateView(
@@ -48,15 +43,16 @@ public class MyPlanFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadData();
-        listView = (ListView) view.findViewById(R.id.listViewSimple);
-        listView.setAdapter(new PlaceAdapter(this.getContext(), R.layout.list_place_item, placeList));
+        listView = (ListView) view.findViewById(R.id.listViewPlan);
+        listView.setAdapter(new PlanAdapter(this.getContext(), R.layout.list_plan_item, plan));
         listView.setOnItemClickListener(
 
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getActivity().getBaseContext(), "You clicked " + placeList.get(position).getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent2 = new Intent(view.getContext(), MainActivity.class);
+                        Toast.makeText(getActivity().getBaseContext(), "You clicked " + plan.get(position).getPlanName(), Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(view.getContext(), EditPlanActivity.class);
+                        intent2.putExtra("position", position);
                         startActivity(intent2);
                         getActivity().finish();
                     }
@@ -70,11 +66,11 @@ public class MyPlanFragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("task list", null);
-        Type type = new TypeToken<ArrayList<Place >>() {}.getType();
-        placeList = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Plan >>() {}.getType();
+        plan = gson.fromJson(json, type);
 
-        if(placeList == null){
-            placeList = new ArrayList<>();
+        if(plan == null){
+            plan = new ArrayList<Plan>();
         }
 
     }
