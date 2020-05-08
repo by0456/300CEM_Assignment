@@ -12,20 +12,8 @@
         tools:layout="@layout/fragment_my_plan">
 
 
-        <action
-            android:id="@+id/action_MyPlanFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.assignment.travelplanner.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
 
-
-        <action
-            android:id="@+id/action_SecondFragment_to_MyPlanFragment"
-            app:destination="@id/MyPlanFragment" />
     </fragment>
+
 
 </navigation>

@@ -1,6 +1,9 @@
 package com.assignment.travelplanner;
 
-public class Place {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Place implements Parcelable {
 
     private String name;
     private String description;
@@ -13,6 +16,25 @@ public class Place {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    protected Place(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
+    }
+
+    public static final Creator<Place> CREATOR = new Creator<Place>() {
+        @Override
+        public Place createFromParcel(Parcel in) {
+            return new Place(in);
+        }
+
+        @Override
+        public Place[] newArray(int size) {
+            return new Place[size];
+        }
+    };
 
     public String getName(){
         return this.name;
@@ -38,4 +60,16 @@ public class Place {
         this.description = name;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
+    }
 }
