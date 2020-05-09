@@ -95,6 +95,24 @@ public class AddPlaceActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+        {
+            String name = data.getStringExtra("Name");
+            String address = data.getStringExtra("Address");
+            String Latitude = data.getStringExtra("Latitude");
+            String Longitude = data.getStringExtra("Longitude");
+
+            etName.setText(name);
+            etDescription.setText(address);
+            etLatitude.setText(Latitude);
+            etLongitude.setText(Longitude);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         Intent intent2 = new Intent(this, EditPlanActivity.class);
 
@@ -107,7 +125,8 @@ public class AddPlaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(v.getContext(), MapActivity.class);
-                startActivity(intent2);
+                intent2.putExtra("position", position);
+                startActivityForResult(intent2, 2);
             }
         });
     }

@@ -7,7 +7,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +20,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,14 +58,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
-
-    //widgets
-    private EditText mSearchText;
     private ImageView mGps;
-
-    //vars
+    private ImageView mEnter;
+    private ImageView mSave;
+    private AutoCompleteTextView autoCompleteTextView;
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
+    private Marker marker;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
@@ -71,8 +75,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        mSearchText = (EditText) findViewById(R.id.input_search);
+        autoCompleteTextView = findViewById(R.id.autoComplete);
+        autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(MapActivity.this, android.R.layout.simple_list_item_1));
         mGps = (ImageView)findViewById(R.id.ic_gps);
+        mEnter = (ImageView)findViewById(R.id.ic_enter);
+        mSave = (ImageView)findViewById(R.id.ic_mapSave);
 
         getLocationPermission();
         init();
@@ -81,7 +88,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void init(){
         Log.d(TAG, "init: initializing");
 
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mEnter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                geoLocate();
+
+            }
+        });
+
+        mSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(marker==null){
+                    Toast.makeText(v.getContext(), "Please enter the place name, address or country", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(v.getContext(), "Title = "+autoCompleteTextView.getText().toString()+", "+marker.getTitle()+" latitude = "+marker.getPosition().latitude+" longitude = "+marker.getPosition().longitude, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(v.getContext(), EditPlanActivity.class);
+                    intent.putExtra("Name", autoCompleteTextView.getText().toString());
+                    intent.putExtra("Address", marker.getTitle());
+                    intent.putExtra("Latitude", String.valueOf(marker.getPosition().latitude));
+                    intent.putExtra("Longitude", String.valueOf(marker.getPosition().longitude));
+                    setResult(2,intent);
+                    finish();
+                }
+
+            }
+        });
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                geoLocate();
+            }
+        });
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE
@@ -109,7 +149,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void geoLocate(){
         Log.d(TAG, "geoLocate: geolocationg");
 
-        String searchString = mSearchText.getText().toString();
+        String searchString = autoCompleteTextView.getText().toString();
         Geocoder geocoder = new Geocoder(MapActivity.this);
         List<Address> list = new ArrayList<>();
         try{
@@ -126,6 +166,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
 
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
+            hideKeyboard(MapActivity.this);
         }
     }
 
@@ -174,7 +215,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.clear();
 
 
-            mMap.addMarker(options);
+            marker = mMap.addMarker(options);
 
         }
 
@@ -257,6 +298,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void hideSoftKeyboard(){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
