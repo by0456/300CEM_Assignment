@@ -123,7 +123,7 @@ public class EditPlanActivity extends AppCompatActivity {
     {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
                 .setTitle("Delete")
-                .setMessage("Do you want to Delete")
+                .setMessage("Do you want to Delete this plan")
                 .setIcon(R.drawable.ic_delete)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 

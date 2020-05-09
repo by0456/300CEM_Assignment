@@ -1,9 +1,11 @@
 package com.assignment.travelplanner;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -81,7 +83,7 @@ public class EditPlaceActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_place, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_place, menu);
         return true;
     }
 
@@ -98,6 +100,10 @@ public class EditPlaceActivity extends AppCompatActivity {
                 intent3.putExtra("action", "edit");
                 intent3.putExtra("name", etName_edit.getText().toString());
                 startActivityForResult(intent3, 3);
+                break;
+            case R.id.action_delete:
+                AlertDialog diaBox = AskOption();
+                diaBox.show();
                 break;
             case R.id.action_save:
                 placeList.get(position_place).setName(etName_edit.getText().toString());
@@ -184,6 +190,40 @@ public class EditPlaceActivity extends AppCompatActivity {
 
         startActivity(intent2);
         finish();
+    }
+
+    private AlertDialog AskOption()
+    {
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete this place")
+                .setIcon(R.drawable.ic_delete)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        plan.get(position).getPlaces().remove(position_place);
+                        saveData();
+                        Intent intent = new Intent(EditPlaceActivity.this, EditPlanActivity.class);
+                        intent.putExtra("position", position);
+                        startActivity(intent);
+                        finish();
+
+                        dialog.dismiss();
+
+                    }
+
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+
+        return myQuittingDialogBox;
     }
 
 }
