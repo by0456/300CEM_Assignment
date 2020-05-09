@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddPlanActivity"></activity>
+        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".AddPlanActivity" />
         <activity android:name=".EditPlanActivity" />
         <activity android:name=".AddPlaceActivity" />
         <activity

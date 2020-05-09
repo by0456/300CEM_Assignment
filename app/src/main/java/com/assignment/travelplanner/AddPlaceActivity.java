@@ -25,6 +25,7 @@ public class AddPlaceActivity extends AppCompatActivity {
     private EditText etLatitude;
     private EditText etLongitude;
     private Button btnSave;
+    private Button btnMap;
     private int position;
 
     @Override
@@ -41,6 +42,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         etDescription = (EditText) findViewById(R.id.etDescription);
         etLatitude = (EditText) findViewById(R.id.etLatitude);
         etLongitude = (EditText) findViewById(R.id.etLongitude);
+        btnMap = (Button)findViewById(R.id.btnMap);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +52,13 @@ public class AddPlaceActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
                 startActivity(intent2);
                 finish();
+            }
+        });
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(v.getContext(), MapActivity.class);
+                startActivity(intent2);
             }
         });
     }

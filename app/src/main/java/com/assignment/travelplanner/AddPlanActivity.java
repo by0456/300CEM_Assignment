@@ -63,5 +63,13 @@ public class AddPlanActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent2 = new Intent(this, MainActivity.class);
+
+        startActivity(intent2);
+        finish();
+    }
+
 
 }
