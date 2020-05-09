@@ -15,7 +15,70 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:elevation="10dp"
+        android:background="@drawable/white_border"
+        android:id="@+id/relLayout1">
 
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/ic_magnify"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_mgnify" />
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/ic_magnify"
+            android:layout_marginRight="40dp"
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:textColor="#000"
+            android:id="@+id/autoComplete"
+            android:background="@null"
+            android:hint="Enter the Address, City Name"
+            android:imeOptions="actionSearch"
+            />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/ic_enter"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_enter" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ic_gps"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/relLayout1"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="41dp"
+        android:layout_marginRight="362dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_gps" />
+
+    <ImageView
+        android:id="@+id/ic_mapSave"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/ic_gps"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-37dp"
+        android:layout_marginRight="19dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_mapsave" />
 
 
 </RelativeLayout>

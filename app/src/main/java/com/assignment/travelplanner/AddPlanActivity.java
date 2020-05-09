@@ -1,11 +1,14 @@
 package com.assignment.travelplanner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,18 +30,43 @@ public class AddPlanActivity extends AppCompatActivity {
         loadData();
 
         etPlanName = (EditText)findViewById(R.id.etPlanName);
-        Button btnCreatePlan = (Button)findViewById(R.id.btnCreatePlan);
-        btnCreatePlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setTitle("");
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            case R.id.action_save:
                 plan.add(new Plan(etPlanName.getText().toString(), new ArrayList<Place>()));
                 saveData();
-                Intent intent2 = new Intent(v.getContext(), MainActivity.class);
+                Intent intent2 = new Intent(this, MainActivity.class);
                 startActivity(intent2);
                 finish();
-            }
-        });
+                break;
 
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveData(){

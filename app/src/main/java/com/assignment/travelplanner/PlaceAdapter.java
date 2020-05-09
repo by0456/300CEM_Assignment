@@ -38,12 +38,20 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
             TextView tvPlaceDescription = (TextView) v.findViewById(R.id.tvPlaceDescription);
             TextView tvPlaceLatitude = (TextView) v.findViewById(R.id.tvPlaceLatitude);
             TextView tvPlaceLongitude = (TextView) v.findViewById(R.id.tvPlaceLongitude);
+            TextView tvPlaceAddress = (TextView) v.findViewById(R.id.tvPlaceAddress);
 
             tvPlaceName.setText(place.get(position).getName());
             tvPlaceDescription.setText(place.get(position).getDescription());
-            tvPlaceLatitude.setText("The Latitude : "+place.get(position).getLatitude());
-            tvPlaceLongitude.setText("The Longitude : "+place.get(position).getLongitude());
 
+            if(!(place.get(position).getAddress().equals(""))){
+                tvPlaceAddress.setText("Address : "+place.get(position).getAddress());
+            }
+            if(!(place.get(position).getLatitude().equals(""))){
+                tvPlaceLatitude.setText("Latitude : "+place.get(position).getLatitude());
+            }
+            if(!(place.get(position).getLongitude().equals(""))){
+                tvPlaceLongitude.setText("Longitude : "+place.get(position).getLongitude());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();

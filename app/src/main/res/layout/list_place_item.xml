@@ -21,17 +21,21 @@
             android:textSize="25sp" />
 
         <TextView
+            android:id="@+id/tvPlaceAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/tvPlaceLatitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Latitude"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvPlaceLongitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Longitude"
             android:textSize="12sp" />
 
 

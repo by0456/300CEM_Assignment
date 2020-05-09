@@ -10,8 +10,12 @@ public class Place implements Parcelable {
     private String latitude;
     private String longitude;
 
-    public Place(String name, String description, String latitude, String longitude){
+
+    private String address;
+
+    public Place(String name, String address, String description, String latitude, String longitude){
         this.name = name;
+        this.address = address;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -52,12 +56,28 @@ public class Place implements Parcelable {
         return this.longitude;
     }
 
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude){
+        this.longitude = longitude;
+    }
+
     public void setName(String name){
         this.name = name;
     }
 
     public void setDescription(String description){
-        this.description = name;
+        this.description = description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

@@ -1,20 +1,19 @@
 package com.assignment.travelplanner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,15 +26,13 @@ public class AddPlaceActivity extends AppCompatActivity {
     private ArrayList<Place> placeList;
     private EditText etName;
     private EditText etDescription;
-    private EditText etLatitude;
-    private EditText etLongitude;
+    private TextView tvLatitude;
+    private TextView tvLongitude;
+    private TextView tvAddress;
     private Button btnSave;
     private Button btnMap;
     private int position;
 
-    private static final String TAG = "AddPlaceActivity";
-
-    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +43,57 @@ public class AddPlaceActivity extends AppCompatActivity {
         position = intent.getIntExtra("position", 0);
         loadData(position);
         placeList = plan.get(position).getPlaces();
-        btnSave = (Button)findViewById(R.id.button_save2);
-        etName = (EditText) findViewById(R.id.etName);
-        etDescription = (EditText) findViewById(R.id.etDescription);
-        etLatitude = (EditText) findViewById(R.id.etLatitude);
-        etLongitude = (EditText) findViewById(R.id.etLongitude);
-        btnMap = (Button)findViewById(R.id.btnMap);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                placeList.add(new Place(etName.getText().toString(), etDescription.getText().toString(), etLatitude.getText().toString(), etLongitude.getText().toString()));
-                plan.get(position).setPlaces(placeList);
-                saveData();
-                Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
-                startActivity(intent2);
-                finish();
-            }
-        });
+        etName = (EditText) findViewById(R.id.etName_edit);
+        etDescription = (EditText) findViewById(R.id.etDescription_edit);
+        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
+        tvLongitude = (TextView) findViewById(R.id.tvLongitude_edit);
+        tvAddress = (TextView)findViewById(R.id.tvAddress_edit);
+        tvAddress.setVisibility(View.GONE);
+        tvLatitude.setVisibility(View.GONE);
+        tvLongitude.setVisibility(View.GONE);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        if(isServicesOK()){
-            init();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setTitle("");
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_add_place, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.action_map:
+                Intent intent2 = new Intent(this, MapActivity.class);
+                intent2.putExtra("position", position);
+                intent2.putExtra("action", "add");
+                startActivityForResult(intent2, 2);
+                break;
+            case R.id.action_save:
+                placeList.add(new Place(etName.getText().toString(), tvAddress.getText().toString(), etDescription.getText().toString(), tvLatitude.getText().toString(), tvLongitude.getText().toString()));
+                plan.get(position).setPlaces(placeList);
+                saveData();
+                Intent intent3 = new Intent(this, EditPlanActivity.class);
+                startActivity(intent3);
+                finish();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveData(){
@@ -94,6 +120,34 @@ public class AddPlaceActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+        {
+            String name = data.getStringExtra("Name");
+            String address = data.getStringExtra("Address");
+            String latitude = data.getStringExtra("Latitude");
+            String longitude = data.getStringExtra("Longitude");
+
+            if(!address.equals("")){
+                tvAddress.setVisibility(View.VISIBLE);
+            }
+            if(!latitude.equals("")){
+                tvLatitude.setVisibility(View.VISIBLE);
+            }
+            if(!longitude.equals("")){
+                tvLongitude.setVisibility(View.VISIBLE);
+            }
+
+            etName.setText(name);
+            tvAddress.setText(address);
+            tvLatitude.setText(latitude);
+            tvLongitude.setText(longitude);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         Intent intent2 = new Intent(this, EditPlanActivity.class);
 
@@ -101,34 +155,4 @@ public class AddPlaceActivity extends AppCompatActivity {
         finish();
     }
 
-    private void init(){
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent(v.getContext(), MapActivity.class);
-                startActivity(intent2);
-            }
-        });
-    }
-
-    public boolean isServicesOK(){
-        Log.d(TAG, "isServicesOK() : checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddPlaceActivity.this);
-
-        if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //an error occured but we can resolve it
-            Log.d(TAG, "isServicesOK: an error orrcured but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(AddPlaceActivity.this, available, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }
-        else{
-            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
 }

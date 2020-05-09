@@ -6,8 +6,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPlanActivity">
-
+    android:id="@+id/EditPlanActivity"
+    tools:context=".EditPlaceActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,15 +34,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <EditText
-            android:id="@+id/etPlanName"
+            android:id="@+id/etName_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="581dp"
-            android:hint="Enter the name of the plan" />
+            android:layout_marginBottom="618dp"
+            android:hint="Enter the name" />
+
+        <TextView
+            android:id="@+id/tvAddress_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="582dp"
+            android:hint="Address : " />
+
+        <TextView
+            android:id="@+id/tvLatitude_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="558dp"
+            android:hint="Latitude : " />
+
+        <TextView
+            android:id="@+id/tvLongitude_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="533dp"
+            android:hint="Longitude : " />
+
+        <EditText
+            android:id="@+id/etDescription_edit"
+            android:layout_width="match_parent"
+            android:layout_height="183dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="339dp"
+            android:hint="Enter the description" />
+
 
 
     </RelativeLayout>
+
 
 </LinearLayout>

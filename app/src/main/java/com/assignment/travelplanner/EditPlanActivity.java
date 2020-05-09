@@ -1,14 +1,20 @@
 package com.assignment.travelplanner;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,27 +38,63 @@ public class EditPlanActivity extends AppCompatActivity {
         loadData(position);
         listView = (ListView)findViewById(R.id.listViewPlace);
         listView.setAdapter(new PlaceAdapter(this, R.layout.list_place_item, placeList));
-        Button btnAddPlace = (Button)findViewById(R.id.btnAddPlace);
-        Button btnEditPlanActivityBack = (Button)findViewById(R.id.btnEditPlanActivityBack);
-        btnAddPlace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddPlaceActivity.class);
-                intent.putExtra("position", position);
+        listView.setOnItemClickListener(
 
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
+                        Intent intent2 = new Intent(view.getContext(), EditPlaceActivity.class);
+                        intent2.putExtra("position", position);
+                        intent2.putExtra("position_place", p);
+                        startActivity(intent2);
+                        finish();
+                    }
+                }
+        );
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setTitle("");
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.action_home:
+                Intent intent = new Intent(EditPlanActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
-            }
-        });
+                break;
+            case R.id.action_delete:
+                AlertDialog diaBox = AskOption();
+                diaBox.show();
+                break;
+            case R.id.action_add:
+                Intent intent2 = new Intent(this, AddPlaceActivity.class);
+                intent2.putExtra("position", position);
 
-        btnEditPlanActivityBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(intent);
+                startActivity(intent2);
                 finish();
-            }
-        });
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadData(int position){
@@ -75,5 +117,47 @@ public class EditPlanActivity extends AppCompatActivity {
 
         startActivity(intent2);
         finish();
+    }
+
+    private AlertDialog AskOption()
+    {
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete this plan")
+                .setIcon(R.drawable.ic_delete)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        plan.remove(position);
+                        saveData();
+                        Intent intent = new Intent(EditPlanActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                        dialog.dismiss();
+
+                    }
+
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+
+        return myQuittingDialogBox;
+    }
+
+    private void saveData(){
+        SharedPreferences sharedPreferences = this.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(plan);
+        editor.putString("task list", json);
+        editor.apply();
     }
 }
