@@ -52,6 +52,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         etLatitude = (EditText) findViewById(R.id.etLatitude);
         etLongitude = (EditText) findViewById(R.id.etLongitude);
         btnMap = (Button)findViewById(R.id.btnMap);
+        init();
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
