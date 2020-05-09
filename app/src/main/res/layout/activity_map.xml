@@ -59,32 +59,26 @@
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/ic_gps"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/relLayout1"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginRight="362dp"
         android:scaleType="centerCrop"
-        android:id="@+id/ic_gps"
-        android:src="@drawable/ic_gps"/>
+        android:src="@drawable/ic_gps" />
 
     <ImageView
+        android:id="@+id/ic_mapSave"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/ic_gps"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-37dp"
+        android:layout_marginRight="19dp"
         android:scaleType="centerCrop"
-        android:id="@+id/ic_mapSave"
-        android:src="@drawable/ic_mapsave"/>
-
-
-
-
-
-
+        android:src="@drawable/ic_mapsave" />
 
 
 </RelativeLayout>

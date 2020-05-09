@@ -20,37 +20,53 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class AddPlaceActivity extends AppCompatActivity {
+public class EditPlaceActivity extends AppCompatActivity {
 
     private ArrayList<Plan> plan;
     private ArrayList<Place> placeList;
-    private EditText etName;
-    private EditText etDescription;
-    private TextView tvLatitude;
-    private TextView tvLongitude;
-    private TextView tvAddress;
+    private EditText etName_edit;
+    private EditText etDescription_edit;
+    private TextView tvLatitude_edit;
+    private TextView tvLongitude_edit;
+    private TextView tvAddress_edit;
     private Button btnSave;
     private Button btnMap;
     private int position;
+    private int position_place;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_place);
+        setContentView(R.layout.activity_edit_place);
         Intent intent = getIntent();
 
         position = intent.getIntExtra("position", 0);
+        position_place = intent.getIntExtra("position_place", 0);
         loadData(position);
         placeList = plan.get(position).getPlaces();
-        etName = (EditText) findViewById(R.id.etName_edit);
-        etDescription = (EditText) findViewById(R.id.etDescription_edit);
-        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
-        tvLongitude = (TextView) findViewById(R.id.tvLongitude_edit);
-        tvAddress = (TextView)findViewById(R.id.tvAddress_edit);
-        tvAddress.setVisibility(View.GONE);
-        tvLatitude.setVisibility(View.GONE);
-        tvLongitude.setVisibility(View.GONE);
+        etName_edit = (EditText) findViewById(R.id.etName_edit);
+        etDescription_edit = (EditText) findViewById(R.id.etDescription_edit);
+        tvLatitude_edit = (TextView) findViewById(R.id.tvLatitude_edit);
+        tvLongitude_edit = (TextView) findViewById(R.id.tvLongitude_edit);
+        tvAddress_edit = (TextView)findViewById(R.id.tvAddress_edit);
+
+        etName_edit.setText(placeList.get(position_place).getName());
+        etDescription_edit.setText(placeList.get(position_place).getDescription());
+        tvLatitude_edit.setText(placeList.get(position_place).getLatitude());
+        tvLongitude_edit.setText(placeList.get(position_place).getLongitude());
+        tvAddress_edit.setText(placeList.get(position_place).getAddress());
+
+        if(tvAddress_edit.getText().toString().equals("")){
+            tvAddress_edit.setVisibility(View.GONE);
+        }
+        if(tvLatitude_edit.getText().toString().equals("")){
+            tvLatitude_edit.setVisibility(View.GONE);
+        }
+        if(tvLongitude_edit.getText().toString().equals("")){
+            tvLongitude_edit.setVisibility(View.GONE);
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,17 +93,22 @@ public class AddPlaceActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.action_map:
-                Intent intent2 = new Intent(this, MapActivity.class);
-                intent2.putExtra("position", position);
-                intent2.putExtra("action", "add");
-                startActivityForResult(intent2, 2);
+                Intent intent3 = new Intent(this, MapActivity.class);
+                intent3.putExtra("position", position);
+                intent3.putExtra("action", "edit");
+                intent3.putExtra("name", etName_edit.getText().toString());
+                startActivityForResult(intent3, 3);
                 break;
             case R.id.action_save:
-                placeList.add(new Place(etName.getText().toString(), tvAddress.getText().toString(), etDescription.getText().toString(), tvLatitude.getText().toString(), tvLongitude.getText().toString()));
+                placeList.get(position_place).setName(etName_edit.getText().toString());
+                placeList.get(position_place).setAddress(tvAddress_edit.getText().toString());
+                placeList.get(position_place).setDescription(etDescription_edit.getText().toString());
+                placeList.get(position_place).setLatitude(tvLatitude_edit.getText().toString());
+                placeList.get(position_place).setLongitude(tvLongitude_edit.getText().toString());
                 plan.get(position).setPlaces(placeList);
                 saveData();
-                Intent intent3 = new Intent(this, EditPlanActivity.class);
-                startActivity(intent3);
+                Intent intent4 = new Intent(this, EditPlanActivity.class);
+                startActivity(intent4);
                 finish();
                 break;
 
@@ -123,7 +144,7 @@ public class AddPlaceActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2)
+        if(requestCode==3)
         {
             String name = data.getStringExtra("Name");
             String address = data.getStringExtra("Address");
@@ -131,19 +152,29 @@ public class AddPlaceActivity extends AppCompatActivity {
             String longitude = data.getStringExtra("Longitude");
 
             if(!address.equals("")){
-                tvAddress.setVisibility(View.VISIBLE);
+                tvAddress_edit.setText(address);
+                tvAddress_edit.setVisibility(View.VISIBLE);
+            }else{
+                tvAddress_edit.setVisibility(View.GONE);
             }
             if(!latitude.equals("")){
-                tvLatitude.setVisibility(View.VISIBLE);
+                tvLatitude_edit.setText(latitude);
+                tvLatitude_edit.setVisibility(View.VISIBLE);
+            }else{
+                tvLatitude_edit.setVisibility(View.GONE);
+
             }
             if(!longitude.equals("")){
-                tvLongitude.setVisibility(View.VISIBLE);
+                tvLongitude_edit.setText(longitude);
+                tvLongitude_edit.setVisibility(View.VISIBLE);
+            }else{
+                tvLongitude_edit.setVisibility(View.GONE);
+
             }
 
-            etName.setText(name);
-            tvAddress.setText(address);
-            tvLatitude.setText(latitude);
-            tvLongitude.setText(longitude);
+            if(!name.equals("")){
+                etName_edit.setText(name);
+            }
         }
     }
 

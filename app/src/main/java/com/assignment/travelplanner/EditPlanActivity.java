@@ -11,7 +11,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +38,19 @@ public class EditPlanActivity extends AppCompatActivity {
         loadData(position);
         listView = (ListView)findViewById(R.id.listViewPlace);
         listView.setAdapter(new PlaceAdapter(this, R.layout.list_place_item, placeList));
+        listView.setOnItemClickListener(
+
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
+                        Intent intent2 = new Intent(view.getContext(), EditPlaceActivity.class);
+                        intent2.putExtra("position", position);
+                        intent2.putExtra("position_place", p);
+                        startActivity(intent2);
+                        finish();
+                    }
+                }
+        );
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

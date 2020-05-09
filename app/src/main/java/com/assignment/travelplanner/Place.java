@@ -56,12 +56,20 @@ public class Place implements Parcelable {
         return this.longitude;
     }
 
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude){
+        this.longitude = longitude;
+    }
+
     public void setName(String name){
         this.name = name;
     }
 
     public void setDescription(String description){
-        this.description = name;
+        this.description = description;
     }
 
     public String getAddress() {
