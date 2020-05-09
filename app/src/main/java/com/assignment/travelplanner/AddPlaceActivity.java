@@ -1,6 +1,8 @@
 package com.assignment.travelplanner;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,9 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -27,8 +32,9 @@ public class AddPlaceActivity extends AppCompatActivity {
     private ArrayList<Place> placeList;
     private EditText etName;
     private EditText etDescription;
-    private EditText etLatitude;
-    private EditText etLongitude;
+    private TextView tvLatitude;
+    private TextView tvLongitude;
+    private TextView tvAddress;
     private Button btnSave;
     private Button btnMap;
     private int position;
@@ -49,26 +55,55 @@ public class AddPlaceActivity extends AppCompatActivity {
         btnSave = (Button)findViewById(R.id.button_save2);
         etName = (EditText) findViewById(R.id.etName);
         etDescription = (EditText) findViewById(R.id.etDescription);
-        etLatitude = (EditText) findViewById(R.id.etLatitude);
-        etLongitude = (EditText) findViewById(R.id.etLongitude);
+        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
+        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
+        tvAddress = (TextView)findViewById(R.id.tvAddress);
         btnMap = (Button)findViewById(R.id.btnMap);
-        init();
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                placeList.add(new Place(etName.getText().toString(), etDescription.getText().toString(), etLatitude.getText().toString(), etLongitude.getText().toString()));
-                plan.get(position).setPlaces(placeList);
-                saveData();
-                Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
-                startActivity(intent2);
-                finish();
-            }
-        });
+        tvAddress.setVisibility(View.GONE);
+        tvLatitude.setVisibility(View.GONE);
+        tvLongitude.setVisibility(View.GONE);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        if(isServicesOK()){
-            init();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setTitle("");
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.action_map:
+                Intent intent2 = new Intent(this, MapActivity.class);
+                intent2.putExtra("position", position);
+                startActivityForResult(intent2, 2);
+                break;
+            case R.id.action_save:
+                placeList.add(new Place(etName.getText().toString(), tvAddress.getText().toString(), etDescription.getText().toString(), tvLatitude.getText().toString(), tvLongitude.getText().toString()));
+                plan.get(position).setPlaces(placeList);
+                saveData();
+                Intent intent3 = new Intent(this, EditPlanActivity.class);
+                startActivity(intent3);
+                finish();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveData(){
@@ -105,10 +140,14 @@ public class AddPlaceActivity extends AppCompatActivity {
             String Latitude = data.getStringExtra("Latitude");
             String Longitude = data.getStringExtra("Longitude");
 
+            tvAddress.setVisibility(View.VISIBLE);
+            tvLatitude.setVisibility(View.VISIBLE);
+            tvLongitude.setVisibility(View.VISIBLE);
+
             etName.setText(name);
-            etDescription.setText(address);
-            etLatitude.setText(Latitude);
-            etLongitude.setText(Longitude);
+            tvAddress.setText(address);
+            tvLatitude.setText(Latitude);
+            tvLongitude.setText(Longitude);
         }
     }
 
@@ -121,14 +160,7 @@ public class AddPlaceActivity extends AppCompatActivity {
     }
 
     private void init(){
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent(v.getContext(), MapActivity.class);
-                intent2.putExtra("position", position);
-                startActivityForResult(intent2, 2);
-            }
-        });
+
     }
 
     public boolean isServicesOK(){
