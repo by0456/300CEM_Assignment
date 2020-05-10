@@ -42,6 +42,25 @@
             android:layout_marginBottom="581dp"
             android:hint="Enter the name of the plan" />
 
+        <TextView
+            android:id="@+id/tvPlanDate"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="494dp"
+            android:hint="The Date of the plan : " />
+
+        <Button
+            android:id="@+id/btnPlanDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="492dp"
+            android:drawableLeft="@drawable/ic_date"
+            android:text=" Date" />
+
 
     </RelativeLayout>
 

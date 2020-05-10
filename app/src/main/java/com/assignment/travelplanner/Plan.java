@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public class Plan implements Parcelable {
     private String planName;
-    private int[] planDate = new int[3];
+
+
+    private Integer [] planDate = new Integer [3];
     private ArrayList<Place> places;
 
     public Plan(String planName, int year, int month, int day, ArrayList<Place> places){
@@ -50,6 +52,16 @@ public class Plan implements Parcelable {
 
     public void setPlanName(String planName){
         this.planName = planName;
+    }
+
+    public Integer [] getPlanDate() {
+        return planDate;
+    }
+
+    public void setPlanDate(int year, int month, int day) {
+        this.planDate[0] = year;
+        this.planDate[1] = month;
+        this.planDate[2] = day;
     }
 
     @Override

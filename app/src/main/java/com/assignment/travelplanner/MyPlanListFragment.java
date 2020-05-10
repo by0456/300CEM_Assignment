@@ -51,7 +51,7 @@ public class MyPlanListFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Toast.makeText(getActivity().getBaseContext(), "You clicked " + plan.get(position).getPlanName(), Toast.LENGTH_SHORT).show();
-                        Intent intent2 = new Intent(view.getContext(), EditPlanActivity.class);
+                        Intent intent2 = new Intent(view.getContext(), ViewPlaceActivity.class);
                         intent2.putExtra("position", position);
                         startActivity(intent2);
                         getActivity().finish();

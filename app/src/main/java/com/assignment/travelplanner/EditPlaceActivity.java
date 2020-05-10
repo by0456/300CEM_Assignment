@@ -113,7 +113,7 @@ public class EditPlaceActivity extends AppCompatActivity {
                 placeList.get(position_place).setLongitude(tvLongitude_edit.getText().toString());
                 plan.get(position).setPlaces(placeList);
                 saveData();
-                Intent intent4 = new Intent(this, EditPlanActivity.class);
+                Intent intent4 = new Intent(this, ViewPlaceActivity.class);
                 startActivity(intent4);
                 finish();
                 break;
@@ -186,7 +186,7 @@ public class EditPlaceActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent2 = new Intent(this, EditPlanActivity.class);
+        Intent intent2 = new Intent(this, ViewPlaceActivity.class);
 
         startActivity(intent2);
         finish();
@@ -204,7 +204,7 @@ public class EditPlaceActivity extends AppCompatActivity {
 
                         plan.get(position).getPlaces().remove(position_place);
                         saveData();
-                        Intent intent = new Intent(EditPlaceActivity.this, EditPlanActivity.class);
+                        Intent intent = new Intent(EditPlaceActivity.this, ViewPlaceActivity.class);
                         intent.putExtra("position", position);
                         startActivity(intent);
                         finish();

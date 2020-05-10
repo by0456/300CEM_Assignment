@@ -86,7 +86,7 @@ public class AddPlaceActivity extends AppCompatActivity {
                 placeList.add(new Place(etName.getText().toString(), tvAddress.getText().toString(), etDescription.getText().toString(), tvLatitude.getText().toString(), tvLongitude.getText().toString()));
                 plan.get(position).setPlaces(placeList);
                 saveData();
-                Intent intent3 = new Intent(this, EditPlanActivity.class);
+                Intent intent3 = new Intent(this, ViewPlaceActivity.class);
                 startActivity(intent3);
                 finish();
                 break;
@@ -149,7 +149,7 @@ public class AddPlaceActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent2 = new Intent(this, EditPlanActivity.class);
+        Intent intent2 = new Intent(this, ViewPlaceActivity.class);
 
         startActivity(intent2);
         finish();

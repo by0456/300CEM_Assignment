@@ -35,9 +35,11 @@ public class PlanAdapter extends ArrayAdapter<Plan> {
             }
 
             TextView tvPlanName = (TextView) v.findViewById(R.id.tvPlanName);
+            TextView tvPlanDate = (TextView) v.findViewById(R.id.tvPlanDate);
 
 
             tvPlanName.setText(plan.get(position).getPlanName());
+            tvPlanDate.setText(plan.get(position).getPlanDate()[2]+" / "+plan.get(position).getPlanDate()[1]+" / "+plan.get(position).getPlanDate()[0]);
 
 
         } catch (Exception e) {

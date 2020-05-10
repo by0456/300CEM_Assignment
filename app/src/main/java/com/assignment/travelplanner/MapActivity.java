@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -23,13 +22,10 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,7 +39,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 if(marker==null){
                     if(action.equals("add")){
-                        Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
+                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
                         intent2.putExtra("Name", "");
                         intent2.putExtra("Address", "");
                         intent2.putExtra("Latitude", "");
@@ -133,7 +128,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }else{
                     //Toast.makeText(v.getContext(), "Title = "+autoCompleteTextView.getText().toString()+", "+marker.getTitle()+" latitude = "+marker.getPosition().latitude+" longitude = "+marker.getPosition().longitude, Toast.LENGTH_SHORT).show();
                     if(action.equals("add")){
-                        Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
+                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
                         intent2.putExtra("Name", autoCompleteTextView.getText().toString());
                         intent2.putExtra("Address", marker.getTitle());
                         intent2.putExtra("Latitude", String.valueOf(marker.getPosition().latitude));
