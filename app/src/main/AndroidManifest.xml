@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditPlaceActivity"></activity>
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SpeakActivity" />
+        <activity android:name=".EditPlanActivity" />
+        <activity android:name=".EditPlaceActivity" />
         <activity android:name=".MapActivity" />
 
         <meta-data
@@ -25,7 +28,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".AddPlanActivity" />
-        <activity android:name=".EditPlanActivity" />
+        <activity android:name=".ViewPlaceActivity" />
         <activity android:name=".AddPlaceActivity" />
         <activity
             android:name=".MainActivity"

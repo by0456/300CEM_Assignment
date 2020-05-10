@@ -8,13 +8,13 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,13 +23,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,9 +41,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -66,7 +64,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private Marker marker;
     private Intent intent;
-    private String action;
+    private int action;
+    private static final int REQUEST_CODE_SPEECH = 1004;
+    private ImageButton ibMapVoice;
+
+
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
@@ -79,7 +81,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
         Intent intent = getIntent();
 
-        action = intent.getStringExtra("action");
+
+        action = intent.getIntExtra("action", 1);
 
         autoCompleteTextView = findViewById(R.id.autoComplete);
         autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(MapActivity.this, android.R.layout.simple_list_item_1));
@@ -87,18 +90,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mEnter = (ImageView)findViewById(R.id.ic_enter);
         mSave = (ImageView)findViewById(R.id.ic_mapSave);
 
+        ibMapVoice = (ImageButton)findViewById(R.id.ibMapVoice);
+
+
+
         getLocationPermission();
         init();
-        if(action.equals("edit")){
-            String name = intent.getStringExtra("name");
-            autoCompleteTextView.setText(name);
-            geoLocate();
 
-        }
+
+
     }
 
     private void init(){
         Log.d(TAG, "init: initializing");
+
+        ibMapVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
 
         mEnter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,15 +123,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 if(marker==null){
-                    if(action.equals("add")){
-                        Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
+                    if(action==(1)){
+                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
                         intent2.putExtra("Name", "");
                         intent2.putExtra("Address", "");
                         intent2.putExtra("Latitude", "");
                         intent2.putExtra("Longitude", "");
                         setResult(2,intent2);
                         finish();
-                    }else if(action.equals("edit")){
+                    }else if(action==(2)){
                         Intent intent2 = new Intent(v.getContext(), EditPlaceActivity.class);
                         intent2.putExtra("Name", "");
                         intent2.putExtra("Address", "");
@@ -132,15 +143,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 }else{
                     //Toast.makeText(v.getContext(), "Title = "+autoCompleteTextView.getText().toString()+", "+marker.getTitle()+" latitude = "+marker.getPosition().latitude+" longitude = "+marker.getPosition().longitude, Toast.LENGTH_SHORT).show();
-                    if(action.equals("add")){
-                        Intent intent2 = new Intent(v.getContext(), EditPlanActivity.class);
+                    if(action==(1)){
+                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
                         intent2.putExtra("Name", autoCompleteTextView.getText().toString());
                         intent2.putExtra("Address", marker.getTitle());
                         intent2.putExtra("Latitude", String.valueOf(marker.getPosition().latitude));
                         intent2.putExtra("Longitude", String.valueOf(marker.getPosition().longitude));
                         setResult(2,intent2);
                         finish();
-                    }else if(action.equals("edit")){
+                    }else if(action==(2)){
                         Intent intent2 = new Intent(v.getContext(), EditPlaceActivity.class);
                         intent2.putExtra("Name", autoCompleteTextView.getText().toString());
                         intent2.putExtra("Address", marker.getTitle());
@@ -185,9 +196,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         hideSoftKeyboard();
     }
 
+
     private void geoLocate(){
         Log.d(TAG, "geoLocate: geolocationg");
-
         String searchString = autoCompleteTextView.getText().toString();
         Geocoder geocoder = new Geocoder(MapActivity.this);
         List<Address> list = new ArrayList<>();
@@ -248,12 +259,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
         if(!title.equals("My Location")){
             MarkerOptions options = new MarkerOptions().position(latlng).title(title);
-
-
-
             mMap.clear();
-
-
             marker = mMap.addMarker(options);
 
         }
@@ -347,6 +353,68 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void speak(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH);
+
+        }catch(Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    @Override
+    protected  void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case REQUEST_CODE_SPEECH:{
+                if(resultCode == RESULT_OK && null!=data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                    autoCompleteTextView.setText(result.get(0));
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getLocationPermission();
+        init();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(action==(1)){
+            Intent intent2 = new Intent(this, ViewPlaceActivity.class);
+            intent2.putExtra("Name", "");
+            intent2.putExtra("Address", "");
+            intent2.putExtra("Latitude", "");
+            intent2.putExtra("Longitude", "");
+            setResult(2,intent2);
+            finish();
+        }else if(action==(2)){
+            Intent intent2 = new Intent(this, EditPlaceActivity.class);
+            intent2.putExtra("Name", "");
+            intent2.putExtra("Address", "");
+            intent2.putExtra("Latitude", "");
+            intent2.putExtra("Longitude", "");
+            setResult(3,intent2);
+            finish();
+        }
     }
 
 

@@ -6,8 +6,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/EditPlanActivity"
-    tools:context=".EditPlaceActivity">
+    android:id="@+id/editPlanActivity"
+    tools:context=".EditPlanActivity">
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,6 +32,7 @@
 
     </RelativeLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,44 +40,102 @@
 
         <EditText
             android:id="@+id/etName_edit"
-            android:layout_width="match_parent"
+            android:layout_width="327dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="618dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="72dp"
             android:hint="Enter the name" />
+
+        <ImageButton
+            android:id="@+id/ibPlaceVoice_edit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="15dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_mic_black_24dp" />
 
         <TextView
             android:id="@+id/tvAddress_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="582dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="62dp"
             android:hint="Address : " />
 
         <TextView
             android:id="@+id/tvLatitude_edit"
-            android:layout_width="match_parent"
+            android:layout_width="191dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="558dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="220dp"
             android:hint="Latitude : " />
 
         <TextView
             android:id="@+id/tvLongitude_edit"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="533dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="3dp"
             android:hint="Longitude : " />
 
         <EditText
             android:id="@+id/etDescription_edit"
             android:layout_width="match_parent"
-            android:layout_height="183dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="339dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="133dp"
             android:hint="Enter the description" />
 
+        <TextView
+            android:id="@+id/tvPlaceDate_edit"
+            android:layout_width="123dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="304dp"
+            android:layout_marginEnd="274dp"
+            android:hint="The Date of visiting this place : " />
+
+        <TextView
+            android:id="@+id/tvPlaceTime_edit"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="533dp"
+            android:layout_marginEnd="274dp"
+            android:hint="The Time of visiting this place : " />
+
+        <DatePicker
+            android:id="@+id/dpPlaceDate_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="218dp"
+            android:layout_marginEnd="17dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
+
+        <TimePicker
+            android:id="@+id/tpPlaceTime_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="452dp"
+            android:layout_marginEnd="17dp"
+            android:timePickerMode="spinner" />
 
 
     </RelativeLayout>

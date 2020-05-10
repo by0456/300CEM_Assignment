@@ -9,16 +9,24 @@ public class Place implements Parcelable {
     private String description;
     private String latitude;
     private String longitude;
+    private Integer [] placeDate = new Integer[3];
+
+    private Integer [] placeTime = new Integer[2];
 
 
     private String address;
 
-    public Place(String name, String address, String description, String latitude, String longitude){
+    public Place(String name, int year, int month, int day, int hour, int minute, String address, String description, String latitude, String longitude){
         this.name = name;
         this.address = address;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.placeDate[0] = year;
+        this.placeDate[1] = month;
+        this.placeDate[2] = day;
+        this.placeTime[0] = hour;
+        this.placeTime[1] = minute;
     }
 
     protected Place(Parcel in) {
@@ -78,6 +86,25 @@ public class Place implements Parcelable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer[] getPlaceDate() {
+        return placeDate;
+    }
+
+    public void setPlaceDate(int year, int month, int day) {
+        this.placeDate[0] = year;
+        this.placeDate[1] = month;
+        this.placeDate[2] = day;
+    }
+
+    public Integer[] getPlaceTime() {
+        return placeTime;
+    }
+
+    public void setPlaceTime(int hour, int minute) {
+        this.placeTime[0] = hour;
+        this.placeTime[1] = minute;
     }
 
     @Override

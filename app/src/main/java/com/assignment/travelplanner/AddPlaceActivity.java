@@ -3,22 +3,31 @@ package com.assignment.travelplanner;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AddPlaceActivity extends AppCompatActivity {
 
@@ -29,9 +38,15 @@ public class AddPlaceActivity extends AppCompatActivity {
     private TextView tvLatitude;
     private TextView tvLongitude;
     private TextView tvAddress;
-    private Button btnSave;
-    private Button btnMap;
+
+    private TextView tvPlaceDate;
+    private TextView tvPlaceTime;
     private int position;
+    private int placeYear, placeMonth, placeDay, placeHour, placeMinute;
+    private DatePicker dpPlaceDate;
+    private TimePicker tpPlaceTime;
+    private static final int REQUEST_CODE_SPEECH = 1002;
+    private ImageButton ibPlaceVoice;
 
 
     @Override
@@ -39,18 +54,37 @@ public class AddPlaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place);
         Intent intent = getIntent();
+        final Calendar c = Calendar.getInstance();
 
         position = intent.getIntExtra("position", 0);
         loadData(position);
         placeList = plan.get(position).getPlaces();
-        etName = (EditText) findViewById(R.id.etName_edit);
-        etDescription = (EditText) findViewById(R.id.etDescription_edit);
+        etName = (EditText) findViewById(R.id.etName);
+        etDescription = (EditText) findViewById(R.id.etDescription);
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
-        tvLongitude = (TextView) findViewById(R.id.tvLongitude_edit);
-        tvAddress = (TextView)findViewById(R.id.tvAddress_edit);
+        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
+        tvAddress = (TextView)findViewById(R.id.tvAddress);
+
+        tvPlaceDate = (TextView)findViewById(R.id.tvPlaceDate);
+        tvPlaceTime = (TextView)findViewById(R.id.tvPlaceTime);
+        dpPlaceDate = (DatePicker)findViewById(R.id.dpPlaceDate);
+        tpPlaceTime = (TimePicker)findViewById(R.id.tpPlaceTime);
+        tpPlaceTime.setIs24HourView(true);
+        placeYear = c.get(Calendar.YEAR);
+        placeMonth = c.get(Calendar.MONTH);
+        placeDay = c.get(Calendar.DAY_OF_MONTH);
+        placeHour = 00;
+        placeMinute = 00;
         tvAddress.setVisibility(View.GONE);
         tvLatitude.setVisibility(View.GONE);
         tvLongitude.setVisibility(View.GONE);
+        ibPlaceVoice = (ImageButton)findViewById(R.id.ibPlaceVoice);
+        ibPlaceVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -79,14 +113,21 @@ public class AddPlaceActivity extends AppCompatActivity {
             case R.id.action_map:
                 Intent intent2 = new Intent(this, MapActivity.class);
                 intent2.putExtra("position", position);
-                intent2.putExtra("action", "add");
+                intent2.putExtra("action", 1);
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.action_save:
-                placeList.add(new Place(etName.getText().toString(), tvAddress.getText().toString(), etDescription.getText().toString(), tvLatitude.getText().toString(), tvLongitude.getText().toString()));
+                placeYear = dpPlaceDate.getYear();
+                placeMonth = dpPlaceDate.getMonth() + 1;
+                placeDay = dpPlaceDate.getDayOfMonth();
+                placeHour = tpPlaceTime.getHour();
+                placeMinute = tpPlaceTime.getMinute();
+
+                placeList.add(new Place(etName.getText().toString(), placeYear, placeMonth, placeDay, placeHour, placeMinute, tvAddress.getText().toString(), etDescription.getText().toString(), tvLatitude.getText().toString(), tvLongitude.getText().toString()));
                 plan.get(position).setPlaces(placeList);
                 saveData();
-                Intent intent3 = new Intent(this, EditPlanActivity.class);
+                Intent intent3 = new Intent(this, ViewPlaceActivity.class);
+                intent3.putExtra("position", position);
                 startActivity(intent3);
                 finish();
                 break;
@@ -144,12 +185,36 @@ public class AddPlaceActivity extends AppCompatActivity {
             tvAddress.setText(address);
             tvLatitude.setText(latitude);
             tvLongitude.setText(longitude);
+
+        } else if(requestCode==REQUEST_CODE_SPEECH){
+            if(resultCode == RESULT_OK && null!=data){
+                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                etName.setText(result.get(0));
+            }
         }
+    }
+
+    private void speak(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH);
+
+        }catch(Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent2 = new Intent(this, EditPlanActivity.class);
+        Intent intent2 = new Intent(this, ViewPlaceActivity.class);
+        intent2.putExtra("position", position);
 
         startActivity(intent2);
         finish();
