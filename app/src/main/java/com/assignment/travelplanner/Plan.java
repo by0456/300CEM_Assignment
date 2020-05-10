@@ -7,11 +7,15 @@ import java.util.ArrayList;
 
 public class Plan implements Parcelable {
     private String planName;
+    private int[] planDate = new int[3];
     private ArrayList<Place> places;
 
-    public Plan(String planName, ArrayList<Place> places){
+    public Plan(String planName, int year, int month, int day, ArrayList<Place> places){
         this.planName = planName;
         this.places = places;
+        this.planDate[0] = year;
+        this.planDate[1] = month;
+        this.planDate[2] = day;
     }
 
     protected Plan(Parcel in) {
