@@ -29,8 +29,8 @@ public class AddPlanActivity extends AppCompatActivity {
     private int planYear, planYear2;
     private int planMonth, planMonth2;
     private int planDay, planDay2;
-    private Button btnPlanBeginDate, btnPlanEndDate;
     private TextView tvPlanBeginDate, tvPlanEndDate;
+    private DatePicker dpPlanStartDate, dpPlanEndDate;
 
 
     @Override
@@ -46,11 +46,11 @@ public class AddPlanActivity extends AppCompatActivity {
         planYear2 = c.get(Calendar.YEAR);
         planMonth2 = c.get(Calendar.MONTH)+1;
         planDay2 = c.get(Calendar.DAY_OF_MONTH);
-        btnPlanBeginDate = (Button)findViewById(R.id.btnPlanBeginDate);
-        btnPlanEndDate = (Button)findViewById(R.id.btnPlanEndDate);
+        dpPlanStartDate = (DatePicker)findViewById(R.id.dpPlanStartDate);
+        dpPlanEndDate = (DatePicker)findViewById(R.id.dpPlanEndDate);
 
         etPlanName = (EditText)findViewById(R.id.etPlanName);
-        tvPlanBeginDate = (TextView)findViewById(R.id.tvPlanDate);
+        tvPlanBeginDate = (TextView)findViewById(R.id.tvBeginDate);
         tvPlanEndDate = (TextView)findViewById(R.id.tvEndDate);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -61,48 +61,6 @@ public class AddPlanActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
             getSupportActionBar().setTitle("");
         }
-
-        btnPlanBeginDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-
-                                tvPlanBeginDate.setText("The Begin Date of the plan : "+dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
-                                planYear = year;
-                                planMonth = monthOfYear + 1;
-                                planDay = dayOfMonth;
-
-                            }
-                        }, planYear, planMonth-1, planDay);
-                datePickerDialog.show();
-            }
-        });
-
-        btnPlanEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-
-                                tvPlanEndDate.setText("The End Date of the plan : "+dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
-                                planYear2 = year;
-                                planMonth2 = monthOfYear + 1;
-                                planDay2 = dayOfMonth;
-
-                            }
-                        }, planYear2, planMonth2-1, planDay2);
-                datePickerDialog.show();
-            }
-        });
 
     }
 
@@ -122,6 +80,14 @@ public class AddPlanActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_save:
+
+                planYear = dpPlanStartDate.getYear();
+                planMonth = dpPlanStartDate.getMonth()+1;
+                planDay = dpPlanStartDate.getDayOfMonth();
+
+                planYear2 = dpPlanEndDate.getYear();
+                planMonth2 = dpPlanEndDate.getMonth()+1;
+                planDay2 = dpPlanEndDate.getDayOfMonth();
 
                 plan.add(new Plan(etPlanName.getText().toString(), planYear, planMonth, planDay, planYear2, planMonth2, planDay2, new ArrayList<Place>()));
                 saveData();

@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -342,6 +343,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getLocationPermission();
+        init();
+
     }
 
 

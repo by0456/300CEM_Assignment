@@ -14,6 +14,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvPlaceDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DateTime"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/tvPlaceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

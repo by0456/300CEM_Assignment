@@ -39,46 +39,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="581dp"
+            android:layout_marginBottom="615dp"
             android:hint="Enter the name of the plan" />
 
         <TextView
             android:id="@+id/tvBeginDate_edit"
-            android:layout_width="311dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="494dp"
+            android:layout_marginBottom="549dp"
             android:hint="The Begin Date of the plan : " />
+
+        <DatePicker
+            android:id="@+id/dpPlanStartDate_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="84dp"
+            android:layout_marginBottom="328dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
 
         <TextView
             android:id="@+id/tvEndDate_edit"
             android:layout_width="311dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="423dp"
+            android:layout_marginBottom="291dp"
             android:hint="The End Date of the plan : " />
 
-        <Button
-            android:id="@+id/btnPlanBeginDate_edit"
+        <DatePicker
+            android:id="@+id/dpPlanEndDate_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="492dp"
-            android:drawableLeft="@drawable/ic_date"
-            android:text=" Date" />
+            android:layout_marginEnd="84dp"
+            android:layout_marginBottom="71dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
 
-        <Button
-            android:id="@+id/btnPlanEndDate_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="411dp"
-            android:drawableLeft="@drawable/ic_date"
-            android:text=" Date" />
+
 
 
     </RelativeLayout>

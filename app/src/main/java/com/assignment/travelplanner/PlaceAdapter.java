@@ -39,7 +39,23 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
             TextView tvPlaceLatitude = (TextView) v.findViewById(R.id.tvPlaceLatitude);
             TextView tvPlaceLongitude = (TextView) v.findViewById(R.id.tvPlaceLongitude);
             TextView tvPlaceAddress = (TextView) v.findViewById(R.id.tvPlaceAddress);
+            TextView tvPlaceDateTime = (TextView)v.findViewById(R.id.tvPlaceDateTime);
 
+            String hour="";
+            String minute="";
+            if(place.get(position).getPlaceTime()[0]<10){
+                hour = "0"+place.get(position).getPlaceTime()[0];
+            }else{
+                hour = ""+place.get(position).getPlaceTime()[0];
+            }
+            if(place.get(position).getPlaceTime()[1]<10){
+                minute = "0"+place.get(position).getPlaceTime()[1];
+            }else{
+                minute = ""+place.get(position).getPlaceTime()[1];
+            }
+
+            tvPlaceDateTime.setText(place.get(position).getPlaceDate()[2]+" / "+place.get(position).getPlaceDate()[1]+" / "+place.get(position).getPlaceDate()[0]+"   "
+            +hour+" : "+minute);
             tvPlaceName.setText(place.get(position).getName());
             tvPlaceDescription.setText(place.get(position).getDescription());
 

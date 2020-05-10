@@ -9,6 +9,8 @@
     android:id="@+id/addPlanActivity"
     tools:context=".AddPlaceActivity">
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,13 +32,14 @@
 
     </RelativeLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <EditText
-            android:id="@+id/etName_edit"
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -44,74 +47,81 @@
             android:hint="Enter the name" />
 
         <TextView
-            android:id="@+id/tvAddress_edit"
+            android:id="@+id/tvAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="582dp"
+            android:layout_marginBottom="594dp"
             android:hint="Address : " />
 
         <TextView
             android:id="@+id/tvLatitude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="558dp"
-            android:hint="Latitude : " />
-
-        <TextView
-            android:id="@+id/tvLongitude_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="533dp"
-            android:hint="Longitude : " />
-
-        <EditText
-            android:id="@+id/etDescription_edit"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="423dp"
-            android:hint="Enter the description" />
-
-        <TextView
-            android:id="@+id/tvPlanDate"
-            android:layout_width="311dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="381dp"
-            android:hint="The Begin Date of the plan : " />
-
-        <TextView
-            android:id="@+id/tvEndDate"
-            android:layout_width="311dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="333dp"
-            android:hint="The End Date of the plan : " />
-
-        <Button
-            android:id="@+id/btnPlaceDate"
-            android:layout_width="wrap_content"
+            android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="366dp"
-            android:drawableLeft="@drawable/ic_date"
-            android:text=" Date" />
+            android:layout_marginEnd="220dp"
+            android:layout_marginBottom="568dp"
+            android:hint="Latitude : " />
 
-        <Button
-            android:id="@+id/btnPlaceTime"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvLongitude"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="3dp"
-            android:layout_marginBottom="315dp"
-            android:drawableLeft="@drawable/ic_time"
-            android:text=" Date" />
+            android:layout_marginBottom="568dp"
+            android:hint="Longitude : " />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="497dp"
+            android:hint="Enter the description" />
+
+        <TextView
+            android:id="@+id/tvPlaceDate"
+            android:layout_width="123dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="274dp"
+            android:layout_marginBottom="336dp"
+            android:hint="The Date of visiting this place : " />
+
+        <TextView
+            android:id="@+id/tvPlaceTime"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="274dp"
+            android:layout_marginBottom="107dp"
+            android:hint="The Time of visiting this place : " />
+
+        <DatePicker
+            android:id="@+id/dpPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="245dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
+
+        <TimePicker
+            android:id="@+id/tpPlaceTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="11dp"
+            android:timePickerMode="spinner" />
 
 
     </RelativeLayout>
