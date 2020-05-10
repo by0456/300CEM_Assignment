@@ -17,14 +17,14 @@
             android:id="@+id/tvPlaceDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DateTime"
+            android:text="@string/tvPlaceDaateTIme_text"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvPlaceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/tvPlaceName_text"
             android:textSize="25sp" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
-            android:text="Description"
+            android:text="@string/tvPlaceDescription_text"
             android:textSize="20sp" />
 
     </LinearLayout>

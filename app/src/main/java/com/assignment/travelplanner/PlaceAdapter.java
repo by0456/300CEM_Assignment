@@ -1,6 +1,7 @@
 package com.assignment.travelplanner;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,15 +60,33 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
             tvPlaceName.setText(place.get(position).getName());
             tvPlaceDescription.setText(place.get(position).getDescription());
 
-            if(!(place.get(position).getAddress().equals(""))){
-                tvPlaceAddress.setText("Address : "+place.get(position).getAddress());
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+            String language = sharedPreferences.getString("language", "");
+            String address, latitude, longitude;
+            if(language.equals("en")){
+                if(!(place.get(position).getAddress().equals(""))){
+                    tvPlaceAddress.setText("Address : "+place.get(position).getAddress());
+                }
+                if(!(place.get(position).getLatitude().equals(""))){
+                    tvPlaceLatitude.setText("Latitude : "+place.get(position).getLatitude());
+                }
+                if(!(place.get(position).getLongitude().equals(""))){
+                    tvPlaceLongitude.setText("Longitude : "+place.get(position).getLongitude());
+                }
+            }else if(language.equals("zh")){
+                if(!(place.get(position).getAddress().equals(""))){
+                    tvPlaceAddress.setText("地址 : "+place.get(position).getAddress());
+                }
+                if(!(place.get(position).getLatitude().equals(""))){
+                    tvPlaceLatitude.setText("緯度 : "+place.get(position).getLatitude());
+                }
+                if(!(place.get(position).getLongitude().equals(""))){
+                    tvPlaceLongitude.setText("經度 : "+place.get(position).getLongitude());
+                }
             }
-            if(!(place.get(position).getLatitude().equals(""))){
-                tvPlaceLatitude.setText("Latitude : "+place.get(position).getLatitude());
-            }
-            if(!(place.get(position).getLongitude().equals(""))){
-                tvPlaceLongitude.setText("Longitude : "+place.get(position).getLongitude());
-            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();

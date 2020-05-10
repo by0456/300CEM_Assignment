@@ -46,7 +46,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="72dp"
-            android:hint="Enter the name" />
+            android:hint="@string/etName_edit_hint" />
 
         <ImageButton
             android:id="@+id/ibPlaceVoice_edit"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="62dp"
-            android:hint="Address : " />
+            android:hint="@string/tvAddress_edit_hint" />
 
         <TextView
             android:id="@+id/tvLatitude_edit"
@@ -76,7 +76,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="220dp"
-            android:hint="Latitude : " />
+            android:hint="@string/tvLatitude_edit_hint" />
 
         <TextView
             android:id="@+id/tvLongitude_edit"
@@ -86,7 +86,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="3dp"
-            android:hint="Longitude : " />
+            android:hint="@string/tvLongitude_edit_hint" />
 
         <EditText
             android:id="@+id/etDescription_edit"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="133dp"
-            android:hint="Enter the description" />
+            android:hint="@string/etDescription_edit_hint" />
 
         <TextView
             android:id="@+id/tvPlaceDate_edit"
@@ -104,7 +104,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="304dp"
             android:layout_marginEnd="274dp"
-            android:hint="The Date of visiting this place : " />
+            android:hint="@string/tvPlaceDate_edit_hint" />
 
         <TextView
             android:id="@+id/tvPlaceTime_edit"
@@ -114,7 +114,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="533dp"
             android:layout_marginEnd="274dp"
-            android:hint="The Time of visiting this place : " />
+            android:hint="@string/tvPlaceTime_edit_hint" />
 
         <DatePicker
             android:id="@+id/dpPlaceDate_edit"

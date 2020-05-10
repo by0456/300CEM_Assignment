@@ -3,11 +3,14 @@ package com.assignment.travelplanner;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MyPlanListFragment extends Fragment {
@@ -36,11 +40,13 @@ public class MyPlanListFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_plan, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         loadData();
         listView = (ListView) view.findViewById(R.id.listViewPlan);
@@ -50,7 +56,6 @@ public class MyPlanListFragment extends Fragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getActivity().getBaseContext(), "You clicked " + plan.get(position).getPlanName(), Toast.LENGTH_SHORT).show();
                         Intent intent2 = new Intent(view.getContext(), ViewPlaceActivity.class);
                         intent2.putExtra("position", position);
                         startActivity(intent2);
@@ -72,6 +77,16 @@ public class MyPlanListFragment extends Fragment {
         if(plan == null){
             plan = new ArrayList<Plan>();
         }
+
+    }
+
+    public void setLocale(String language) {
+        Locale myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
 
     }
 }

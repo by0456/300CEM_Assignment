@@ -8,8 +8,11 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +47,9 @@ public class EditPlanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+        String language = sharedPreferences.getString("language", "");
+        setLocale(language);
         setContentView(R.layout.activity_edit_plan);
         loadData();
 
@@ -159,7 +165,7 @@ public class EditPlanActivity extends AppCompatActivity {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "");
 
         try {
             startActivityForResult(intent, REQUEST_CODE_SPEECH);
@@ -195,5 +201,15 @@ public class EditPlanActivity extends AppCompatActivity {
 
         startActivity(intent2);
         finish();
+    }
+
+    public void setLocale(String language) {
+        Locale myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+
     }
 }
