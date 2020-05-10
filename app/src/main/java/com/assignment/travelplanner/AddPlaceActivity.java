@@ -9,14 +9,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +45,8 @@ public class AddPlaceActivity extends AppCompatActivity {
     private int placeYear, placeMonth, placeDay, placeHour, placeMinute;
     private DatePicker dpPlaceDate;
     private TimePicker tpPlaceTime;
+    private static final int REQUEST_CODE_SPEECH = 1002;
+    private ImageButton ibPlaceVoice;
 
 
     @Override
@@ -70,12 +75,16 @@ public class AddPlaceActivity extends AppCompatActivity {
         placeDay = c.get(Calendar.DAY_OF_MONTH);
         placeHour = 00;
         placeMinute = 00;
-
-
-
         tvAddress.setVisibility(View.GONE);
         tvLatitude.setVisibility(View.GONE);
         tvLongitude.setVisibility(View.GONE);
+        ibPlaceVoice = (ImageButton)findViewById(R.id.ibPlaceVoice);
+        ibPlaceVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -104,7 +113,7 @@ public class AddPlaceActivity extends AppCompatActivity {
             case R.id.action_map:
                 Intent intent2 = new Intent(this, MapActivity.class);
                 intent2.putExtra("position", position);
-                intent2.putExtra("action", "add");
+                intent2.putExtra("action", 1);
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.action_save:
@@ -176,12 +185,36 @@ public class AddPlaceActivity extends AppCompatActivity {
             tvAddress.setText(address);
             tvLatitude.setText(latitude);
             tvLongitude.setText(longitude);
+
+        } else if(requestCode==REQUEST_CODE_SPEECH){
+            if(resultCode == RESULT_OK && null!=data){
+                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                etName.setText(result.get(0));
+            }
         }
+    }
+
+    private void speak(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH);
+
+        }catch(Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
     public void onBackPressed() {
         Intent intent2 = new Intent(this, ViewPlaceActivity.class);
+        intent2.putExtra("position", position);
 
         startActivity(intent2);
         finish();

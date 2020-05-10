@@ -1,5 +1,6 @@
 package com.assignment.travelplanner;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,19 +9,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class EditPlanActivity extends AppCompatActivity {
     private ArrayList<Plan> plan;
@@ -31,6 +36,9 @@ public class EditPlanActivity extends AppCompatActivity {
     private int position;
     private TextView tvBeginDate_edit, tvEndDate_edit;
     private DatePicker dpPlanStartDate_edit, dpPlanEndDate_edit;
+    private static final int REQUEST_CODE_SPEECH = 1001;
+    private ImageButton ibPlanVoice_edit;
+
 
 
     @Override
@@ -51,6 +59,14 @@ public class EditPlanActivity extends AppCompatActivity {
 
         dpPlanStartDate_edit = (DatePicker)findViewById(R.id.dpPlanStartDate_edit);
         dpPlanEndDate_edit = (DatePicker)findViewById(R.id.dpPlanEndDate_edit);
+
+        ibPlanVoice_edit = (ImageButton)findViewById(R.id.ibPlanVoice_edit);
+        ibPlanVoice_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -137,6 +153,38 @@ public class EditPlanActivity extends AppCompatActivity {
             plan = new ArrayList<>();
         }
 
+    }
+
+    private void speak(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH);
+
+        }catch(Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    @Override
+    protected  void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case REQUEST_CODE_SPEECH:{
+                if(resultCode == RESULT_OK && null!=data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                    etPlanName_edit.setText(result.get(0));
+                }
+            }
+        }
     }
 
 

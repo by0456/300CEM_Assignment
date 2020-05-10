@@ -36,47 +36,61 @@
 
         <EditText
             android:id="@+id/etPlanName"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="615dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="65dp"
             android:hint="Enter the name of the plan" />
+
+        <ImageButton
+            android:id="@+id/ibPlanVoice"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="6dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_mic_black_24dp" />
 
         <TextView
             android:id="@+id/tvBeginDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="549dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="107dp"
             android:hint="The Begin Date of the plan : " />
 
         <DatePicker
             android:id="@+id/dpPlanStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="135dp"
             android:layout_marginEnd="84dp"
-            android:layout_marginBottom="328dp"
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
 
         <TextView
             android:id="@+id/tvEndDate"
-            android:layout_width="311dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="291dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="365dp"
             android:hint="The End Date of the plan : " />
 
         <DatePicker
             android:id="@+id/dpPlanEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="392dp"
             android:layout_marginEnd="84dp"
-            android:layout_marginBottom="71dp"
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
 

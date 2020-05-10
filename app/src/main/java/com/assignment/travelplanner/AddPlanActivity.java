@@ -1,5 +1,6 @@
 package com.assignment.travelplanner;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,13 +9,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddPlanActivity extends AppCompatActivity {
     private ArrayList<Plan> plan;
@@ -31,6 +36,9 @@ public class AddPlanActivity extends AppCompatActivity {
     private int planDay, planDay2;
     private TextView tvPlanBeginDate, tvPlanEndDate;
     private DatePicker dpPlanStartDate, dpPlanEndDate;
+    private static final int REQUEST_CODE_SPEECH = 1000;
+    private ImageButton ibPlanVoice;
+
 
 
     @Override
@@ -52,6 +60,14 @@ public class AddPlanActivity extends AppCompatActivity {
         etPlanName = (EditText)findViewById(R.id.etPlanName);
         tvPlanBeginDate = (TextView)findViewById(R.id.tvBeginDate);
         tvPlanEndDate = (TextView)findViewById(R.id.tvEndDate);
+
+        ibPlanVoice = (ImageButton)findViewById(R.id.ibPlanVoice);
+        ibPlanVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -121,6 +137,38 @@ public class AddPlanActivity extends AppCompatActivity {
             plan = new ArrayList<>();
         }
 
+    }
+
+    private void speak(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH);
+
+        }catch(Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    @Override
+    protected  void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case REQUEST_CODE_SPEECH:{
+                if(resultCode == RESULT_OK && null!=data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                    etPlanName.setText(result.get(0));
+                }
+            }
+        }
     }
 
     @Override
