@@ -26,28 +26,32 @@ import java.util.Calendar;
 public class AddPlanActivity extends AppCompatActivity {
     private ArrayList<Plan> plan;
     private EditText etPlanName;
-    private int planYear;
-    private int planMonth;
-    private int planDay;
-    private Button btnPlanDate;
-    private TextView tvPlanDate;
+    private int planYear, planYear2;
+    private int planMonth, planMonth2;
+    private int planDay, planDay2;
+    private Button btnPlanBeginDate, btnPlanEndDate;
+    private TextView tvPlanBeginDate, tvPlanEndDate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plan);
+        loadData();
 
         final Calendar c = Calendar.getInstance();
         planYear = c.get(Calendar.YEAR);
-        planMonth = c.get(Calendar.MONTH);
+        planMonth = c.get(Calendar.MONTH)+1;
         planDay = c.get(Calendar.DAY_OF_MONTH);
-        btnPlanDate = (Button)findViewById(R.id.btnPlanDate);
-
-        loadData();
+        planYear2 = c.get(Calendar.YEAR);
+        planMonth2 = c.get(Calendar.MONTH)+1;
+        planDay2 = c.get(Calendar.DAY_OF_MONTH);
+        btnPlanBeginDate = (Button)findViewById(R.id.btnPlanBeginDate);
+        btnPlanEndDate = (Button)findViewById(R.id.btnPlanEndDate);
 
         etPlanName = (EditText)findViewById(R.id.etPlanName);
-        tvPlanDate = (TextView)findViewById(R.id.tvPlanDate);
+        tvPlanBeginDate = (TextView)findViewById(R.id.tvPlanDate);
+        tvPlanEndDate = (TextView)findViewById(R.id.tvEndDate);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,7 +62,7 @@ public class AddPlanActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("");
         }
 
-        btnPlanDate.setOnClickListener(new View.OnClickListener() {
+        btnPlanBeginDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
@@ -68,13 +72,34 @@ public class AddPlanActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                tvPlanDate.setText("The Date of the plan : "+dayOfMonth + " - " + (monthOfYear ) + " - " + year);
+                                tvPlanBeginDate.setText("The Begin Date of the plan : "+dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
                                 planYear = year;
-                                planMonth = monthOfYear ;
+                                planMonth = monthOfYear + 1;
                                 planDay = dayOfMonth;
 
                             }
-                        }, planYear, planMonth, planDay);
+                        }, planYear, planMonth-1, planDay);
+                datePickerDialog.show();
+            }
+        });
+
+        btnPlanEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                tvPlanEndDate.setText("The End Date of the plan : "+dayOfMonth + " - " + (monthOfYear + 1) + " - " + year);
+                                planYear2 = year;
+                                planMonth2 = monthOfYear + 1;
+                                planDay2 = dayOfMonth;
+
+                            }
+                        }, planYear2, planMonth2-1, planDay2);
                 datePickerDialog.show();
             }
         });
@@ -97,7 +122,8 @@ public class AddPlanActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_save:
-                plan.add(new Plan(etPlanName.getText().toString(), planYear, planMonth, planDay, new ArrayList<Place>()));
+
+                plan.add(new Plan(etPlanName.getText().toString(), planYear, planMonth, planDay, planYear2, planMonth2, planDay2, new ArrayList<Place>()));
                 saveData();
                 Intent intent2 = new Intent(this, MainActivity.class);
                 startActivity(intent2);

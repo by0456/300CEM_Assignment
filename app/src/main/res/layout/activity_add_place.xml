@@ -70,11 +70,48 @@
         <EditText
             android:id="@+id/etDescription_edit"
             android:layout_width="match_parent"
-            android:layout_height="183dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="339dp"
+            android:layout_marginBottom="423dp"
             android:hint="Enter the description" />
 
+        <TextView
+            android:id="@+id/tvPlanDate"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="381dp"
+            android:hint="The Begin Date of the plan : " />
+
+        <TextView
+            android:id="@+id/tvEndDate"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="333dp"
+            android:hint="The End Date of the plan : " />
+
+        <Button
+            android:id="@+id/btnPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="366dp"
+            android:drawableLeft="@drawable/ic_date"
+            android:text=" Date" />
+
+        <Button
+            android:id="@+id/btnPlaceTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="315dp"
+            android:drawableLeft="@drawable/ic_time"
+            android:text=" Date" />
 
 
     </RelativeLayout>

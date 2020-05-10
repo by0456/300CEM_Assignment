@@ -43,21 +43,40 @@
             android:hint="Enter the name of the plan" />
 
         <TextView
-            android:id="@+id/tvPlanDate_edit"
+            android:id="@+id/tvBeginDate_edit"
             android:layout_width="311dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="494dp"
-            android:hint="The Date of the plan : " />
+            android:hint="The Begin Date of the plan : " />
+
+        <TextView
+            android:id="@+id/tvEndDate_edit"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="423dp"
+            android:hint="The End Date of the plan : " />
 
         <Button
-            android:id="@+id/btnPlanDate_edit"
+            android:id="@+id/btnPlanBeginDate_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="492dp"
+            android:drawableLeft="@drawable/ic_date"
+            android:text=" Date" />
+
+        <Button
+            android:id="@+id/btnPlanEndDate_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="411dp"
             android:drawableLeft="@drawable/ic_date"
             android:text=" Date" />
 

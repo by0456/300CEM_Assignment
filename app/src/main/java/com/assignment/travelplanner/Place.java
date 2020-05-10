@@ -9,6 +9,8 @@ public class Place implements Parcelable {
     private String description;
     private String latitude;
     private String longitude;
+    private Integer [] placeDate = new Integer[3];
+    private Integer [] placeTime = new Integer[3];
 
 
     private String address;
