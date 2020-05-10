@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SettingActivity"></activity>
-        <activity android:name=".SpeakActivity" />
         <activity android:name=".EditPlanActivity" />
         <activity android:name=".EditPlaceActivity" />
         <activity android:name=".MapActivity" />
