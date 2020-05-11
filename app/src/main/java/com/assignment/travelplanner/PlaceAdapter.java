@@ -63,7 +63,17 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
 
             SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             String language = sharedPreferences.getString("language", "");
-            String address, latitude, longitude;
+            if(!(place.get(position).getAddress().equals(""))){
+                tvPlaceAddress.setText("Address : "+place.get(position).getAddress());
+            }
+            if(!(place.get(position).getLatitude().equals(""))){
+                tvPlaceLatitude.setText("Latitude : "+place.get(position).getLatitude());
+            }
+            if(!(place.get(position).getLongitude().equals(""))){
+                tvPlaceLongitude.setText("Longitude : "+place.get(position).getLongitude());
+            }
+
+
             if(language.equals("en")){
                 if(!(place.get(position).getAddress().equals(""))){
                     tvPlaceAddress.setText("Address : "+place.get(position).getAddress());

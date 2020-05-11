@@ -44,6 +44,7 @@ public class AddPlaceActivity extends AppCompatActivity {
 
     private TextView tvPlaceDate;
     private TextView tvPlaceTime;
+    private TextView labelAddress, labelLatitude, labelLongitude;
     private int position;
     private int placeYear, placeMonth, placeDay, placeHour, placeMinute;
     private DatePicker dpPlaceDate;
@@ -72,6 +73,9 @@ public class AddPlaceActivity extends AppCompatActivity {
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         tvAddress = (TextView)findViewById(R.id.tvAddress);
+        labelAddress = (TextView)findViewById(R.id.labelAddress);
+        labelLatitude = (TextView)findViewById(R.id.labelLatitude);
+        labelLongitude = (TextView)findViewById(R.id.labelLongitude);
 
         tvPlaceDate = (TextView)findViewById(R.id.tvPlaceDate);
         tvPlaceTime = (TextView)findViewById(R.id.tvPlaceTime);
@@ -86,6 +90,10 @@ public class AddPlaceActivity extends AppCompatActivity {
         tvAddress.setVisibility(View.GONE);
         tvLatitude.setVisibility(View.GONE);
         tvLongitude.setVisibility(View.GONE);
+        labelAddress.setVisibility(View.GONE);
+        labelLatitude.setVisibility(View.GONE);
+        labelLongitude.setVisibility(View.GONE);
+
         ibPlaceVoice = (ImageButton)findViewById(R.id.ibPlaceVoice);
         ibPlaceVoice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,12 +189,15 @@ public class AddPlaceActivity extends AppCompatActivity {
 
             if(!address.equals("")){
                 tvAddress.setVisibility(View.VISIBLE);
+                labelAddress.setVisibility(View.VISIBLE);
             }
             if(!latitude.equals("")){
                 tvLatitude.setVisibility(View.VISIBLE);
+                labelLatitude.setVisibility(View.VISIBLE);
             }
             if(!longitude.equals("")){
                 tvLongitude.setVisibility(View.VISIBLE);
+                labelLongitude.setVisibility(View.VISIBLE);
             }
 
             etName.setText(name);

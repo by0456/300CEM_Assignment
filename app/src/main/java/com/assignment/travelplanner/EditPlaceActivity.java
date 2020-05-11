@@ -44,6 +44,7 @@ public class EditPlaceActivity extends AppCompatActivity {
     private int position;
     private int position_place;
     private int placeYear, placeMonth, placeDay, placeHour, placeMinute;
+    private TextView labelAddress, labelLatitude, labelLongitude;
     private DatePicker dpPlaceDate_edit;
     private TimePicker tpPlaceTime_edit;
     private static final int REQUEST_CODE_SPEECH = 1003;
@@ -71,6 +72,9 @@ public class EditPlaceActivity extends AppCompatActivity {
         tvLatitude_edit = (TextView) findViewById(R.id.tvLatitude_edit);
         tvLongitude_edit = (TextView) findViewById(R.id.tvLongitude_edit);
         tvAddress_edit = (TextView)findViewById(R.id.tvAddress_edit);
+        labelAddress = (TextView)findViewById(R.id.labelAddress_edit);
+        labelLatitude = (TextView)findViewById(R.id.labelLatitude_edit);
+        labelLongitude = (TextView)findViewById(R.id.labelLongitude_edit);
 
         dpPlaceDate_edit = (DatePicker)findViewById(R.id.dpPlaceDate_edit);
         tpPlaceTime_edit = (TimePicker)findViewById(R.id.tpPlaceTime_edit);
@@ -90,12 +94,15 @@ public class EditPlaceActivity extends AppCompatActivity {
 
         if(tvAddress_edit.getText().toString().equals("")){
             tvAddress_edit.setVisibility(View.GONE);
+            labelAddress.setVisibility(View.GONE);
         }
         if(tvLatitude_edit.getText().toString().equals("")){
             tvLatitude_edit.setVisibility(View.GONE);
+            labelLatitude.setVisibility(View.GONE);
         }
         if(tvLongitude_edit.getText().toString().equals("")){
             tvLongitude_edit.setVisibility(View.GONE);
+            labelLongitude.setVisibility(View.GONE);
         }
 
         ibPlaceVoice_edit = (ImageButton)findViewById(R.id.ibPlaceVoice_edit);
@@ -208,21 +215,27 @@ public class EditPlaceActivity extends AppCompatActivity {
             if(!address.equals("")){
                 tvAddress_edit.setText(address);
                 tvAddress_edit.setVisibility(View.VISIBLE);
+                labelAddress.setVisibility(View.VISIBLE);
             }else{
                 tvAddress_edit.setVisibility(View.GONE);
+                labelAddress.setVisibility(View.GONE);
             }
             if(!latitude.equals("")){
                 tvLatitude_edit.setText(latitude);
                 tvLatitude_edit.setVisibility(View.VISIBLE);
+                labelLatitude.setVisibility(View.VISIBLE);
             }else{
                 tvLatitude_edit.setVisibility(View.GONE);
+                labelLatitude.setVisibility(View.GONE);
 
             }
             if(!longitude.equals("")){
                 tvLongitude_edit.setText(longitude);
                 tvLongitude_edit.setVisibility(View.VISIBLE);
+                labelLongitude.setVisibility(View.VISIBLE);
             }else{
                 tvLongitude_edit.setVisibility(View.GONE);
+                labelLongitude.setVisibility(View.GONE);
 
             }
 

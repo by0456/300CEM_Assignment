@@ -40,7 +40,7 @@ public class PlanAdapter extends ArrayAdapter<Plan> {
                 v = layoutInflater.inflate(resource, parent, false);
             }
 
-            /*
+
             SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             String language = sharedPreferences.getString("language", "");
             String to = "  to  ";
@@ -52,16 +52,12 @@ public class PlanAdapter extends ArrayAdapter<Plan> {
             TextView tvPlanName = (TextView) v.findViewById(R.id.tvPlanName);
             TextView tvPlanDate = (TextView) v.findViewById(R.id.tvPlanDate);
 
-            if(sharedPreferences.contains("shared preferences")){
-                tvPlanName.setText(plan.get(position).getPlanName());
-                tvPlanDate.setText(plan.get(position).getPlanBeginDate()[2]+" / "+plan.get(position).getPlanBeginDate()[1]+" / "+plan.get(position).getPlanBeginDate()[0]
-                        +"  to  "+plan.get(position).getPlanEndDate()[2]+" / "+plan.get(position).getPlanEndDate()[1]+" / "+plan.get(position).getPlanEndDate()[0]);
-            }else{
+
                 tvPlanName.setText(plan.get(position).getPlanName());
                 tvPlanDate.setText(plan.get(position).getPlanBeginDate()[2]+" / "+plan.get(position).getPlanBeginDate()[1]+" / "+plan.get(position).getPlanBeginDate()[0]
                         +to+plan.get(position).getPlanEndDate()[2]+" / "+plan.get(position).getPlanEndDate()[1]+" / "+plan.get(position).getPlanEndDate()[0]);
-            }
-            */
+
+
 
 
         } catch (Exception e) {

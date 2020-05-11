@@ -120,7 +120,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 if(marker==null){
                     if(action==(1)){
-                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
+                        Intent intent2 = new Intent(v.getContext(), AddPlaceActivity.class);
                         intent2.putExtra("Name", "");
                         intent2.putExtra("Address", "");
                         intent2.putExtra("Latitude", "");
@@ -140,7 +140,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }else{
                     //Toast.makeText(v.getContext(), "Title = "+autoCompleteTextView.getText().toString()+", "+marker.getTitle()+" latitude = "+marker.getPosition().latitude+" longitude = "+marker.getPosition().longitude, Toast.LENGTH_SHORT).show();
                     if(action==(1)){
-                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
+                        Intent intent2 = new Intent(v.getContext(), AddPlaceActivity.class);
                         intent2.putExtra("Name", autoCompleteTextView.getText().toString());
                         intent2.putExtra("Address", marker.getTitle());
                         intent2.putExtra("Latitude", String.valueOf(marker.getPosition().latitude));
