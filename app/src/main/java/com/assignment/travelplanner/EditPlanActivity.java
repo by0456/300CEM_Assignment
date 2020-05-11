@@ -55,13 +55,13 @@ public class EditPlanActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", 0);
+        position = intent.getIntExtra("position", -1);
+
+
 
         etPlanName_edit = (EditText)findViewById(R.id.etPlanName_edit);
         tvBeginDate_edit = (TextView)findViewById(R.id.tvBeginDate_edit);
         tvEndDate_edit = (TextView)findViewById(R.id.tvEndDate_edit);
-
-        etPlanName_edit.setText(plan.get(position).getPlanName());
 
         dpPlanStartDate_edit = (DatePicker)findViewById(R.id.dpPlanStartDate_edit);
         dpPlanEndDate_edit = (DatePicker)findViewById(R.id.dpPlanEndDate_edit);
@@ -74,6 +74,8 @@ public class EditPlanActivity extends AppCompatActivity {
             }
         });
 
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -83,21 +85,24 @@ public class EditPlanActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.editPlanTitle);
         }
 
-        if(plan.get(position).getPlanBeginDate()[0]!=null&&plan.get(position).getPlanBeginDate()[1]!=null&&plan.get(position).getPlanBeginDate()[2]!=null){
-            planYear = plan.get(position).getPlanBeginDate()[0];
-            planMonth = plan.get(position).getPlanBeginDate()[1];
-            planDay = plan.get(position).getPlanBeginDate()[2];
+        if(position>=0){
+            etPlanName_edit.setText(plan.get(position).getPlanName());
+
+            if(plan.get(position).getPlanBeginDate()[0]!=null&&plan.get(position).getPlanBeginDate()[1]!=null&&plan.get(position).getPlanBeginDate()[2]!=null){
+                planYear = plan.get(position).getPlanBeginDate()[0];
+                planMonth = plan.get(position).getPlanBeginDate()[1];
+                planDay = plan.get(position).getPlanBeginDate()[2];
+            }
+
+            if(plan.get(position).getPlanEndDate()[0]!=null&&plan.get(position).getPlanEndDate()[1]!=null&&plan.get(position).getPlanEndDate()[2]!=null){
+                planYear2 = plan.get(position).getPlanEndDate()[0];
+                planMonth2 = plan.get(position).getPlanEndDate()[1];
+                planDay2 = plan.get(position).getPlanEndDate()[2];
+            }
+
+            dpPlanStartDate_edit.updateDate(planYear, planMonth-1, planDay);
+            dpPlanEndDate_edit.updateDate(planYear2, planMonth2-1, planDay2);
         }
-
-        if(plan.get(position).getPlanEndDate()[0]!=null&&plan.get(position).getPlanEndDate()[1]!=null&&plan.get(position).getPlanEndDate()[2]!=null){
-            planYear2 = plan.get(position).getPlanEndDate()[0];
-            planMonth2 = plan.get(position).getPlanEndDate()[1];
-            planDay2 = plan.get(position).getPlanEndDate()[2];
-        }
-
-        dpPlanStartDate_edit.updateDate(planYear, planMonth-1, planDay);
-        dpPlanEndDate_edit.updateDate(planYear2, planMonth2-1, planDay2);
-
 
     }
 
