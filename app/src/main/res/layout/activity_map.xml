@@ -43,7 +43,7 @@
             android:textColor="#000"
             android:id="@+id/autoComplete"
             android:background="@null"
-            android:hint="Enter the Address, City Name"
+            android:hint="@string/autoSearch_hint"
             android:imeOptions="actionSearch"
             />
 

@@ -8,8 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +53,10 @@ public class EditPlaceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+        String language = sharedPreferences.getString("language", "");
+        setLocale(language);
         setContentView(R.layout.activity_edit_place);
         final Calendar c = Calendar.getInstance();
         Intent intent = getIntent();
@@ -105,7 +112,7 @@ public class EditPlaceActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle(R.string.editPlaceTitle);
         }
 
     }
@@ -235,7 +242,7 @@ public class EditPlaceActivity extends AppCompatActivity {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi, please speak something");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "");
 
         try {
             startActivityForResult(intent, REQUEST_CODE_SPEECH);
@@ -260,10 +267,10 @@ public class EditPlaceActivity extends AppCompatActivity {
     private AlertDialog AskOption()
     {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                .setTitle("Delete")
-                .setMessage("Do you want to Delete this place")
-                .setIcon(R.drawable.ic_delete)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.deleteAlertDialog_delete)
+                .setMessage(R.string.deleteAlertDialog_delete_place)
+                .setIcon(R.drawable.ic_d)
+                .setPositiveButton(R.string.deleteAlertDialog_delete, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -279,7 +286,7 @@ public class EditPlaceActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.deleteAlertDialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();
@@ -289,6 +296,16 @@ public class EditPlaceActivity extends AppCompatActivity {
                 .create();
 
         return myQuittingDialogBox;
+    }
+
+    public void setLocale(String language) {
+        Locale myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+
     }
 
 }

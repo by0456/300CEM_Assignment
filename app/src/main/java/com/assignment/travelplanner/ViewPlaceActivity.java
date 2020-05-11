@@ -8,7 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ViewPlaceActivity extends AppCompatActivity {
 
@@ -31,6 +35,9 @@ public class ViewPlaceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+        String language = sharedPreferences.getString("language", "");
+        setLocale(language);
         setContentView(R.layout.activity_view_place);
         Intent intent = getIntent();
         position = intent.getIntExtra("position", 0);
@@ -122,10 +129,10 @@ public class ViewPlaceActivity extends AppCompatActivity {
     private AlertDialog AskOption()
     {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                .setTitle("Delete")
-                .setMessage("Do you want to Delete this plan")
-                .setIcon(R.drawable.ic_delete)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.deleteAlertDialog_delete)
+                .setMessage(R.string.deleteAlertDialog)
+                .setIcon(R.drawable.ic_d)
+                .setPositiveButton(R.string.deleteAlertDialog_delete, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -140,7 +147,7 @@ public class ViewPlaceActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.deleteAlertDialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();
@@ -159,5 +166,15 @@ public class ViewPlaceActivity extends AppCompatActivity {
         String json = gson.toJson(plan);
         editor.putString("task list", json);
         editor.apply();
+    }
+
+    public void setLocale(String language) {
+        Locale myLocale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+
     }
 }

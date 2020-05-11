@@ -46,7 +46,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="72dp"
-            android:hint="Enter the name" />
+            android:hint="@string/etName_hint" />
 
         <ImageButton
             android:id="@+id/ibPlaceVoice"
@@ -61,32 +61,61 @@
             android:src="@drawable/ic_mic_black_24dp" />
 
         <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="62dp"
-            android:hint="Address : " />
+            android:layout_marginEnd="346dp"
+            android:text="@string/tvAddress_hint" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="12dp"
+            android:hint="@string/tvAddress_edit_hint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="345dp"
+            android:text="@string/tvLatitude_hint" />
 
         <TextView
             android:id="@+id/tvLatitude"
-            android:layout_width="191dp"
+            android:layout_width="109dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="220dp"
-            android:hint="Latitude : " />
+            android:hint="@string/tvLatitude_edit_hint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="141dp"
+            android:text="@string/tvLongitude_hint" />
 
         <TextView
             android:id="@+id/tvLongitude"
-            android:layout_width="200dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="3dp"
-            android:hint="Longitude : " />
+            android:hint="@string/tvLongitude_edit_hint" />
 
         <EditText
             android:id="@+id/etDescription"
@@ -94,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="133dp"
-            android:hint="Enter the description" />
+            android:hint="@string/etDescription_hint" />
 
         <TextView
             android:id="@+id/tvPlaceDate"
@@ -104,7 +133,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="304dp"
             android:layout_marginEnd="274dp"
-            android:hint="The Date of visiting this place : " />
+            android:hint="@string/tvPlaceDate_hint" />
 
         <TextView
             android:id="@+id/tvPlaceTime"
@@ -114,7 +143,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="533dp"
             android:layout_marginEnd="274dp"
-            android:hint="The Time of visiting this place : " />
+            android:hint="@string/tvPlaceTime_hint" />
 
         <DatePicker
             android:id="@+id/dpPlaceDate"
