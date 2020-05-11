@@ -84,6 +84,16 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
                 if(!(place.get(position).getLongitude().equals(""))){
                     tvPlaceLongitude.setText("經度 : "+place.get(position).getLongitude());
                 }
+            }else{
+                if(!(place.get(position).getAddress().equals(""))){
+                    tvPlaceAddress.setText("Address : "+place.get(position).getAddress());
+                }
+                if(!(place.get(position).getLatitude().equals(""))){
+                    tvPlaceLatitude.setText("Latitude : "+place.get(position).getLatitude());
+                }
+                if(!(place.get(position).getLongitude().equals(""))){
+                    tvPlaceLongitude.setText("Longitude : "+place.get(position).getLongitude());
+                }
             }
 
 
