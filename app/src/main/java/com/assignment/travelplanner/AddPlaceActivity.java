@@ -66,6 +66,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         final Calendar c = Calendar.getInstance();
 
         position = intent.getIntExtra("position", 0);
+        
         loadData(position);
         placeList = plan.get(position).getPlaces();
         etName = (EditText) findViewById(R.id.etName);
