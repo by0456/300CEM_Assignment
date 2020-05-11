@@ -47,9 +47,8 @@ import java.util.Locale;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-
-
-
+    // This class is reference the tutorial - Android Google Maps Course
+    // The link : https://www.youtube.com/watch?v=s_6xxTjoLGY&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=7 and https://github.com/mitchtabian/Google-Maps-Google-Places/tree/739015abf10ff8fab1bf9e6c899e4013c6fa051a
 
     private static final String TAG = "MapActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -67,9 +66,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private int action;
     private static final int REQUEST_CODE_SPEECH = 1004;
     private ImageButton ibMapVoice;
-
-
-
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
 
@@ -124,7 +120,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 if(marker==null){
                     if(action==(1)){
-                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
+                        Intent intent2 = new Intent(v.getContext(), AddPlaceActivity.class);
                         intent2.putExtra("Name", "");
                         intent2.putExtra("Address", "");
                         intent2.putExtra("Latitude", "");
@@ -144,7 +140,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }else{
                     //Toast.makeText(v.getContext(), "Title = "+autoCompleteTextView.getText().toString()+", "+marker.getTitle()+" latitude = "+marker.getPosition().latitude+" longitude = "+marker.getPosition().longitude, Toast.LENGTH_SHORT).show();
                     if(action==(1)){
-                        Intent intent2 = new Intent(v.getContext(), ViewPlaceActivity.class);
+                        Intent intent2 = new Intent(v.getContext(), AddPlaceActivity.class);
                         intent2.putExtra("Name", autoCompleteTextView.getText().toString());
                         intent2.putExtra("Address", marker.getTitle());
                         intent2.putExtra("Latitude", String.valueOf(marker.getPosition().latitude));
@@ -198,7 +194,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     private void geoLocate(){
-        Log.d(TAG, "geoLocate: geolocationg");
         String searchString = autoCompleteTextView.getText().toString();
         Geocoder geocoder = new Geocoder(MapActivity.this);
         List<Address> list = new ArrayList<>();
@@ -211,10 +206,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         if(list.size() > 0){
             Address address = list.get(0);
-
-            Log.d(TAG, "geoLocate: found a location: "+address.toString());
-            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
-
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
             hideKeyboard(MapActivity.this);
         }
@@ -222,10 +213,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     private void getDeviceLocation(){
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         try{
             if(mLocationPermissionGranted){
 
@@ -255,7 +244,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void moveCamera(LatLng latlng, float zoom, String title){
-        Log.d(TAG, "moveCamera: moving the camera to: Lat: "+latlng.latitude +", lng: "+ latlng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
         if(!title.equals("My Location")){
             MarkerOptions options = new MarkerOptions().position(latlng).title(title);
@@ -268,7 +256,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void initMap(){
-        Log.d(TAG, "initMapp: initializing map");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
@@ -276,7 +263,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void getLocationPermission(){
-        Log.d(TAG, "gotLocationPermission: getting location permissions");
         String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION};
 
@@ -298,7 +284,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionResult: called.");
         mLocationPermissionGranted = false;
 
         switch(requestCode){
@@ -311,7 +296,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             return;
                         }
                     }
-                    Log.d(TAG, "onRequestPermissionResult: permission granted");
                     mLocationPermissionGranted = true;
                     //initialize our map
                     initMap();
@@ -323,7 +307,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
         if (mLocationPermissionGranted) {

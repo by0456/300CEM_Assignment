@@ -45,4 +45,5 @@
     <string name="addPlanTitle">增加計劃</string>
     <string name="addPlaceTitle">增加地點</string>
     <string name="deleteAlertDialog_delete_place">你要刪除這個地點嗎?</string>
+    <string name="placeListTitle">地點列表</string>
 </resources>

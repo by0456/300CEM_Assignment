@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable {
 
+    // The Android Auto Complete Location is reference the tutorial - Android Auto Complete Location
+    // THe Link : https://www.youtube.com/watch?v=Mfozs4A_fxU
+
     ArrayList<String> results = new ArrayList<>();
 
     Context context;
