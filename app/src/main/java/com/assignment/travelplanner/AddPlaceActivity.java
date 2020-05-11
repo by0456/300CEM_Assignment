@@ -65,9 +65,13 @@ public class AddPlaceActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final Calendar c = Calendar.getInstance();
 
-        position = intent.getIntExtra("position", 0);
-        loadData(position);
+
+
+        position = intent.getIntExtra("position", -1);
+
         placeList = plan.get(position).getPlaces();
+        loadData(position);
+
         etName = (EditText) findViewById(R.id.etName);
         etDescription = (EditText) findViewById(R.id.etDescription);
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
@@ -76,7 +80,6 @@ public class AddPlaceActivity extends AppCompatActivity {
         labelAddress = (TextView)findViewById(R.id.labelAddress);
         labelLatitude = (TextView)findViewById(R.id.labelLatitude);
         labelLongitude = (TextView)findViewById(R.id.labelLongitude);
-
         tvPlaceDate = (TextView)findViewById(R.id.tvPlaceDate);
         tvPlaceTime = (TextView)findViewById(R.id.tvPlaceTime);
         dpPlaceDate = (DatePicker)findViewById(R.id.dpPlaceDate);

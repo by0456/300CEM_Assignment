@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class PlaceApi {
 
+    // The PlaceAPI is reference the tutorial - Android Auto Complete Location
+    // THe Link : https://www.youtube.com/watch?v=Mfozs4A_fxU
+
     public ArrayList<String> autoCompletet(String input){
         ArrayList<String> arrayList = new ArrayList();
         HttpURLConnection connection = null;

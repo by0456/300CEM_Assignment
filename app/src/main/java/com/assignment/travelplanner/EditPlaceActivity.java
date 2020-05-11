@@ -63,10 +63,8 @@ public class EditPlaceActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-        position = intent.getIntExtra("position", 0);
-        position_place = intent.getIntExtra("position_place", 0);
-        loadData(position);
-        placeList = plan.get(position).getPlaces();
+        position = intent.getIntExtra("position", -1);
+        position_place = intent.getIntExtra("position_place", -1);
         etName_edit = (EditText) findViewById(R.id.etName_edit);
         etDescription_edit = (EditText) findViewById(R.id.etDescription_edit);
         tvLatitude_edit = (TextView) findViewById(R.id.tvLatitude_edit);
@@ -76,34 +74,42 @@ public class EditPlaceActivity extends AppCompatActivity {
         labelLatitude = (TextView)findViewById(R.id.labelLatitude_edit);
         labelLongitude = (TextView)findViewById(R.id.labelLongitude_edit);
 
+
+
         dpPlaceDate_edit = (DatePicker)findViewById(R.id.dpPlaceDate_edit);
         tpPlaceTime_edit = (TimePicker)findViewById(R.id.tpPlaceTime_edit);
         tpPlaceTime_edit.setIs24HourView(true);
 
-        placeYear = placeList.get(position_place).getPlaceDate()[0];
-        placeMonth = placeList.get(position_place).getPlaceDate()[1];
-        placeDay = placeList.get(position_place).getPlaceDate()[2];
-        placeHour = placeList.get(position_place).getPlaceTime()[0];
-        placeMinute = placeList.get(position_place).getPlaceTime()[1];;
+        if(position>=0&&position_place>=0){
+            loadData(position);
+            placeList = plan.get(position).getPlaces();
+            placeYear = placeList.get(position_place).getPlaceDate()[0];
+            placeMonth = placeList.get(position_place).getPlaceDate()[1];
+            placeDay = placeList.get(position_place).getPlaceDate()[2];
+            placeHour = placeList.get(position_place).getPlaceTime()[0];
+            placeMinute = placeList.get(position_place).getPlaceTime()[1];;
+            etName_edit.setText(placeList.get(position_place).getName());
+            etDescription_edit.setText(placeList.get(position_place).getDescription());
+            tvLatitude_edit.setText(placeList.get(position_place).getLatitude());
+            tvLongitude_edit.setText(placeList.get(position_place).getLongitude());
+            tvAddress_edit.setText(placeList.get(position_place).getAddress());
 
-        etName_edit.setText(placeList.get(position_place).getName());
-        etDescription_edit.setText(placeList.get(position_place).getDescription());
-        tvLatitude_edit.setText(placeList.get(position_place).getLatitude());
-        tvLongitude_edit.setText(placeList.get(position_place).getLongitude());
-        tvAddress_edit.setText(placeList.get(position_place).getAddress());
+            if(tvAddress_edit.getText().toString().equals("")){
+                tvAddress_edit.setVisibility(View.GONE);
+                labelAddress.setVisibility(View.GONE);
+            }
+            if(tvLatitude_edit.getText().toString().equals("")){
+                tvLatitude_edit.setVisibility(View.GONE);
+                labelLatitude.setVisibility(View.GONE);
+            }
+            if(tvLongitude_edit.getText().toString().equals("")){
+                tvLongitude_edit.setVisibility(View.GONE);
+                labelLongitude.setVisibility(View.GONE);
+            }
+        }
 
-        if(tvAddress_edit.getText().toString().equals("")){
-            tvAddress_edit.setVisibility(View.GONE);
-            labelAddress.setVisibility(View.GONE);
-        }
-        if(tvLatitude_edit.getText().toString().equals("")){
-            tvLatitude_edit.setVisibility(View.GONE);
-            labelLatitude.setVisibility(View.GONE);
-        }
-        if(tvLongitude_edit.getText().toString().equals("")){
-            tvLongitude_edit.setVisibility(View.GONE);
-            labelLongitude.setVisibility(View.GONE);
-        }
+
+
 
         ibPlaceVoice_edit = (ImageButton)findViewById(R.id.ibPlaceVoice_edit);
         ibPlaceVoice_edit.setOnClickListener(new View.OnClickListener() {
