@@ -112,7 +112,7 @@ public class EditPlaceActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle(R.string.editPlaceTitle);
         }
 
     }
@@ -267,10 +267,10 @@ public class EditPlaceActivity extends AppCompatActivity {
     private AlertDialog AskOption()
     {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                .setTitle("Delete")
-                .setMessage("Do you want to Delete this place")
-                .setIcon(R.drawable.ic_delete)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.deleteAlertDialog_delete)
+                .setMessage(R.string.deleteAlertDialog_delete_place)
+                .setIcon(R.drawable.ic_d)
+                .setPositiveButton(R.string.deleteAlertDialog_delete, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -286,7 +286,7 @@ public class EditPlaceActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.deleteAlertDialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();

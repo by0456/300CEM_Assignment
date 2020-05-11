@@ -80,7 +80,7 @@ public class EditPlanActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle(R.string.editPlanTitle);
         }
 
         if(plan.get(position).getPlanBeginDate()[0]!=null&&plan.get(position).getPlanBeginDate()[1]!=null&&plan.get(position).getPlanBeginDate()[2]!=null){

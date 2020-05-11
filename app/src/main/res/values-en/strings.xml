@@ -38,5 +38,10 @@
     <string name="tvPlaceTime_hint">The Time of visiting this place :</string>
     <string name="speaking">\"Hi, please speak something\"</string>
     <string name="tvBeginDate_edit_hint">The Begin Date of the plan :</string>
+    <string name="editPlanTitle">Modify The Plan</string>
+    <string name="editPlaceTitle">Modify The Place</string>
+    <string name="addPlanTitle">Add Plan</string>
+    <string name="addPlaceTitle">Add Place</string>
+    <string name="deleteAlertDialog_delete_place">Do you want to delete this place ?</string>
 
 </resources>

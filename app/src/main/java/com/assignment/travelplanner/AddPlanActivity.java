@@ -82,7 +82,7 @@ public class AddPlanActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle(R.string.addPlanTitle);
         }
 
     }

@@ -129,9 +129,9 @@ public class ViewPlaceActivity extends AppCompatActivity {
     private AlertDialog AskOption()
     {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                .setTitle("Delete")
+                .setTitle(R.string.deleteAlertDialog_delete)
                 .setMessage(R.string.deleteAlertDialog)
-                .setIcon(R.drawable.ic_delete)
+                .setIcon(R.drawable.ic_d)
                 .setPositiveButton(R.string.deleteAlertDialog_delete, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {

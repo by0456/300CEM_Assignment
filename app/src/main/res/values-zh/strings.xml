@@ -4,7 +4,7 @@
     <string name="english">英文</string>
     <string name="chinese">中文</string>
     <string name="language">語言</string>
-    <string name="title">我的計劃</string>
+    <string name="title">我的計劃列表</string>
     <string name="deleteAlertDialog">你要刪除這個計劃嗎?</string>
     <string name="deleteAlertDialog_delete">刪除</string>
     <string name="deleteAlertDialog_cancel">取消</string>
@@ -27,8 +27,8 @@
     <string name="tvLatitude_edit_hint">緯度：</string>
     <string name="tvLongitude_edit_hint">經度：</string>
     <string name="etDescription_edit_hint">請輸入描述</string>
-    <string name="tvPlaceDate_edit_hint">到訪詰個地方的日期</string>
-    <string name="tvPlaceTime_edit_hint">到訪詰個地方的時間</string>
+    <string name="tvPlaceDate_edit_hint">到訪這個地點的日期</string>
+    <string name="tvPlaceTime_edit_hint">到訪這個地點的時間</string>
     <string name="etPlanName_hint">請輸入計劃的名稱</string>
     <string name="tvBeginDate_hint">計劃的開始日期 :</string>
     <string name="tvEndDate_hint">計劃的完結日期 :</string>
@@ -37,7 +37,12 @@
     <string name="tvLatitude_hint">緯度：</string>
     <string name="tvLongitude_hint">經度：</string>
     <string name="etDescription_hint">請輸入描述</string>
-    <string name="tvPlaceDate_hint">到訪詰個地方的日期</string>
-    <string name="tvPlaceTime_hint">到訪詰個地方的時間</string>
+    <string name="tvPlaceDate_hint">到訪詰個地點的日期</string>
+    <string name="tvPlaceTime_hint">到訪詰個地點的時間</string>
     <string name="tvBeginDate_edit_hint">計劃的開始日期 :</string>
+    <string name="editPlanTitle">修改計劃</string>
+    <string name="editPlaceTitle">修改地點</string>
+    <string name="addPlanTitle">增加計劃</string>
+    <string name="addPlaceTitle">增加地點</string>
+    <string name="deleteAlertDialog_delete_place">你要刪除這個地點嗎?</string>
 </resources>

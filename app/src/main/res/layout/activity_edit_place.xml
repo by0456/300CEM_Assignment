@@ -61,16 +61,36 @@
             android:src="@drawable/ic_mic_black_24dp" />
 
         <TextView
-            android:id="@+id/tvAddress_edit"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="62dp"
+            android:layout_marginEnd="346dp"
+            android:text="@string/tvAddress_hint" />
+
+        <TextView
+            android:id="@+id/tvAddress_edit"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="12dp"
             android:hint="@string/tvAddress_edit_hint" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="345dp"
+            android:text="@string/tvLatitude_hint" />
+
+        <TextView
             android:id="@+id/tvLatitude_edit"
-            android:layout_width="191dp"
+            android:layout_width="109dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -79,8 +99,17 @@
             android:hint="@string/tvLatitude_edit_hint" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="141dp"
+            android:text="@string/tvLongitude_hint" />
+
+        <TextView
             android:id="@+id/tvLongitude_edit"
-            android:layout_width="200dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
